@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conference 2026 · Climate-Neutral Cities</title>
+  <meta name="description" content="一个仿会议官网风格的一页式模板，包含日程、注册、征稿、赞助、出行等模块，支持暗色模式与无障碍。" />
+  <meta name="author" content="Your Org" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232563eb'/><text x='50' y='62' font-size='60' text-anchor='middle' fill='white'>C</text></svg>">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Conference 2026" />
+  <meta property="og:description" content="Join us for a two-day conference on sustainable cities. Includes program, submission, registration, sponsors and travel info." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="https://example.org" />
+  <style>
+    /* ===== Design Tokens ===== */
+    :root{
+      --bg: #ffffff;
+      --bg-elev: #f7f7f9;
+      --card: #ffffff;
+      --text: #0f172a; /* slate-900 */
+      --muted: #64748b; /* slate-500 */
+      --primary: #2563eb; /* blue-600 */
+      --primary-contrast:#ffffff;
+      --accent: #06b6d4; /* cyan-500 */
+      --border: #e5e7eb;
+      --shadow: 0 12px 30px rgba(0,0,0,.08);
+      --ring: 0 0 0 3px rgba(37,99,235,.3);
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: dark){
+      html[data-theme="auto"]:root{
+        --bg:#0b1020; --bg-elev:#0f152b; --card:#111834; --text:#e5e7eb; --muted:#a1a8c3; --primary:#60a5fa; --primary-contrast:#0b1020; --border:#202a49; --shadow: 0 12px 30px rgba(0,0,0,.5);
+      }
+    }
+    html[data-theme="dark"]:root{ /* manual override */
+      --bg:#0b1020; --bg-elev:#0f152b; --card:#111834; --text:#e5e7eb; --muted:#a1a8c3; --primary:#60a5fa; --primary-contrast:#0b1020; --border:#202a49; --shadow: 0 12px 30px rgba(0,0,0,.5);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif, -apple-system, Segoe UI, Roboto, PingFang SC, Noto Sans CJK SC, Helvetica, Arial, sans-serif; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; scroll-behavior:smooth}
+    .container{max-width:1200px;margin-inline:auto;padding-inline:20px}
+    .grid{display:grid; gap:1.2rem}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--primary);color:var(--primary-contrast);border:1px solid transparent;border-radius:14px;padding:.75rem 1.1rem;font-weight:700;text-decoration:none;box-shadow:var(--shadow)}
+    .btn.secondary{background:transparent;color:var(--text);border-color:var(--border)}
+    .btn.ghost{background:transparent;color:var(--text)}
+    .tag{display:inline-block;padding:.25rem .6rem;border-radius:999px;background:var(--bg-elev);border:1px solid var(--border);color:var(--muted);font-size:.85rem}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+    header{position:sticky;top:0;z-index:40;background:color-mix(in oklab, var(--bg) 85%, transparent);backdrop-filter:saturate(120%) blur(8px);border-bottom:1px solid var(--border)}
+    nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:.6rem;align-items:center;font-weight:900}
+    .logo{width:28px;height:28px;border-radius:8px;background:var(--primary);color:var(--primary-contrast);display:grid;place-items:center}
+    .nav-links{display:none;gap:1rem}
+    .nav-links a{color:var(--muted);text-decoration:none;font-weight:700}
+    .nav-links a:hover,.nav-links a:focus{color:var(--text)}
+    .nav-actions{display:flex;align-items:center;gap:.5rem}
+    .menu-btn{background:transparent;border:1px solid var(--border);padding:.45rem .7rem;border-radius:12px}
+    @media (min-width:900px){.nav-links{display:flex}.menu-btn{display:none}}
+
+    /* Hero */
+    .hero{position:relative; padding: min(18vh,160px) 0; overflow:hidden}
+    .hero::before{content:""; position:absolute; inset:0; background: radial-gradient(1200px 600px at 80% -20%, color-mix(in oklab, var(--primary) 30%, transparent), transparent), linear-gradient( to bottom, color-mix(in oklab, var(--bg) 60%, transparent), transparent ); pointer-events:none}
+    .hero-wrap{display:grid; gap:1rem}
+    .hero h1{font-size:clamp(34px,6vw,68px);line-height:1.05;margin:0}
+    .lead{font-size:clamp(18px,2.6vw,22px);color:var(--muted)}
+    .hero-cards{display:grid; gap:1rem}
+    @media (min-width:900px){.hero-wrap{grid-template-columns:1.2fr .8fr; align-items:center}.hero-cards{grid-template-columns:repeat(2,1fr)}}
+
+    /* Sections */
+    section{padding:72px 0; scroll-margin-top:80px}
+    h2{font-size:clamp(24px,3.3vw,34px); margin:0 0 12px}
+    .muted{color:var(--muted)}
+
+    /* Tables */
+    table{width:100%; border-collapse:collapse}
+    th, td{padding:.8rem; border-bottom:1px solid var(--border); text-align:left}
+    th{font-size:.95rem; color:var(--muted)}
+
+    /* Timeline */
+    .timeline{display:grid; gap:10px}
+    .timeline .item{display:grid; grid-template-columns: 160px 1fr; gap:1rem; align-items:center}
+    @media (max-width:640px){ .timeline .item{grid-template-columns:1fr} }
+
+    /* Logos */
+    .logos{display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:16px; align-items:center}
+    .logos .logo-card{display:grid; place-items:center; height:84px; border:1px solid var(--border); border-radius:12px; background:var(--bg-elev)}
+
+    /* Drawer */
+    .drawer{position:fixed; inset:0; background:rgba(0,0,0,.35); display:none}
+    .drawer[open]{display:block}
+    .drawer-panel{position:absolute; inset:0 0 0 auto; width:min(80vw, 320px); background:var(--bg); padding:18px; border-left:1px solid var(--border)}
+    .drawer a{display:block; padding:12px 8px; color:var(--text); text-decoration:none; border-radius:10px}
+    .drawer a:hover{background:var(--bg-elev)}
+
+    /* CTA Bar */
+    .cta-bar{position:sticky; bottom:0; z-index:30; background:color-mix(in oklab, var(--bg) 90%, transparent); border-top:1px solid var(--border); display:flex; justify-content:center}
+    .cta-bar .inner{display:flex; gap:.8rem; align-items:center; padding:10px 12px}
+
+    /* Top button */
+    #toTop{position:fixed; right:18px; bottom:18px; display:none}
+    #toTop.show{display:inline-flex}
+
+    /* Animations */
+    @keyframes fadeUp{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+    [data-animate]{animation: fadeUp .6s ease both}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+    .skip{position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden}
+    .skip:focus{position:static; width:auto; height:auto; background:var(--primary); color:var(--primary-contrast); padding:6px 10px; border-radius:10px}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip">跳到主要内容</a>
+  <header>
+    <div class="container">
+      <nav aria-label="主导航">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">C</div>
+          <span>Conference 2026</span>
+        </div>
+        <div class="nav-links" role="menubar">
+          <a role="menuitem" href="#home">首页</a>
+          <a role="menuitem" href="#registration">注册</a>
+          <a role="menuitem" href="#submission">征稿</a>
+          <a role="menuitem" href="#programme">日程</a>
+          <a role="menuitem" href="#committee">委员会</a>
+          <a role="menuitem" href="#travel">出行</a>
+          <a role="menuitem" href="#sponsors">赞助</a>
+          <a role="menuitem" href="#contact">联系</a>
+        </div>
+        <div class="nav-actions">
+          <button id="themeBtn" class="btn ghost" aria-label="切换明暗主题">🌓</button>
+          <button id="menuBtn" class="menu-btn" aria-label="打开菜单" aria-haspopup="true" aria-controls="drawer" aria-expanded="false">☰</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Drawer -->
+  <dialog id="drawer" class="drawer" aria-label="移动菜单">
+    <div class="drawer-panel">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px">
+        <strong>导航</strong>
+        <button id="closeDrawer" class="btn ghost" aria-label="关闭菜单">✕</button>
+      </div>
+      <a href="#registration">注册</a>
+      <a href="#submission">征稿</a>
+      <a href="#programme">日程</a>
+      <a href="#committee">委员会</a>
+      <a href="#travel">出行</a>
+      <a href="#sponsors">赞助</a>
+      <a href="#contact">联系</a>
+    </div>
+  </dialog>
+
+  <main id="main">
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="container hero-wrap">
+        <div>
+          <div class="tag" data-animate>主题：气候中和城市 · 城市更新与模拟</div>
+          <h1 data-animate>Conference 2026 · 7 月 2–4 日 · Borlänge, Sweden</h1>
+          <p class="lead" data-animate>一个围绕建筑与城市模拟的国际会议模板。支持注册、征稿、赞助与出行信息，一页打包搞定。</p>
+          <div style="display:flex; gap:.8rem; flex-wrap:wrap" data-animate>
+            <a class="btn" href="#registration">立即注册</a>
+            <a class="btn secondary" href="#submission">提交摘要</a>
+          </div>
+          <p class="muted" id="countdown" data-start="2026-07-02T09:00:00+02:00" style="margin-top:.6rem"></p>
+        </div>
+        <div class="hero-cards">
+          <div class="card" style="padding:16px" data-animate>
+            <strong>地点</strong>
+            <div class="muted">Dalarna University, Borlänge</div>
+            <div class="muted">欧洲/斯德哥尔摩时区</div>
+          </div>
+          <div class="card" style="padding:16px" data-animate>
+            <strong>重要日期</strong>
+            <div class="muted">摘要截稿：2026/02/14</div>
+            <div class="muted">全文截稿：2026/04/15</div>
+            <div class="muted">注册截止：2026/06/16</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration -->
+    <section id="registration" class="container">
+      <h2 data-animate>注册</h2>
+      <p class="muted" data-animate>注册费用仅作示例，替换为你的实际规则与说明。</p>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px,1fr));" data-animate>
+        <div class="card" style="padding:16px">
+          <h3>早鸟</h3>
+          <p class="muted">含会议包与茶歇</p>
+          <p style="font-size:28px; font-weight:900; margin:.4rem 0">€ 280</p>
+          <a class="btn" href="#">去注册</a>
+        </div>
+        <div class="card" style="padding:16px">
+          <h3>标准</h3>
+          <p class="muted">含会议包与茶歇</p>
+          <p style="font-size:28px; font-weight:900; margin:.4rem 0">€ 350</p>
+          <a class="btn" href="#">去注册</a>
+        </div>
+        <div class="card" style="padding:16px">
+          <h3>学生</h3>
+          <p class="muted">需上传学生证明</p>
+          <p style="font-size:28px; font-weight:900; margin:.4rem 0">€ 180</p>
+          <a class="btn" href="#">去注册</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Submission -->
+    <section id="submission" class="container">
+      <h2 data-animate>征稿</h2>
+      <p class="muted" data-animate>使用你自己的模板与系统（EasyChair/Conftool/OpenReview）。下面是一个简要时间线。</p>
+      <div class="timeline card" style="padding:14px" data-animate>
+        <div class="item"><div class="tag">摘要截稿</div><div>2026-02-14（23:59 CET）</div></div>
+        <div class="item"><div class="tag">录用通知</div><div>2026-03-10</div></div>
+        <div class="item"><div class="tag">全文提交</div><div>2026-04-15</div></div>
+        <div class="item"><div class="tag">注册截止</div><div>2026-06-16</div></div>
+      </div>
+      <div class="spacer" style="height:10px"></div>
+      <a class="btn" href="#">查看投稿须知（PDF）</a>
+      <a class="btn secondary" href="#">投稿入口</a>
+    </section>
+
+    <!-- Programme -->
+    <section id="programme" class="container">
+      <h2 data-animate>会议日程（示例）</h2>
+      <p class="muted" data-animate>替换为你的最终议程。可链接到可下载的 PDF。</p>
+      <div class="card" style="padding:14px" data-animate>
+        <table aria-label="日程表示例">
+          <thead>
+            <tr><th>时间</th><th>会场 A</th><th>会场 B</th><th>备注</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>09:00</td><td>开幕 & 主旨演讲</td><td></td><td>礼堂</td></tr>
+            <tr><td>10:30</td><td>并行分会场：城市能耗</td><td>并行分会场：数据平台</td><td>茶歇 10:15</td></tr>
+            <tr><td>12:00</td><td colspan="2">午餐</td><td>餐厅</td></tr>
+            <tr><td>13:30</td><td>专题讨论：净零路径</td><td>工作坊：建模工具</td><td></td></tr>
+            <tr><td>17:30</td><td colspan="2">欢迎酒会</td><td>大厅</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="spacer" style="height:10px"></div>
+      <a class="btn" href="#">下载 PDF 日程</a>
+    </section>
+
+    <!-- Committee / Speakers -->
+    <section id="committee" class="container">
+      <h2 data-animate>组织委员会 / 演讲嘉宾（示例）</h2>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px,1fr));" data-animate>
+        <div class="card" style="padding:14px">
+          <strong>Conference Chair</strong>
+          <div class="muted">Prof. Your Name · University A</div>
+        </div>
+        <div class="card" style="padding:14px">
+          <strong>Programme Chair</strong>
+          <div class="muted">Dr. Someone · Institute B</div>
+        </div>
+        <div class="card" style="padding:14px">
+          <strong>Local Chair</strong>
+          <div class="muted">Ms. Another · Dalarna University</div>
+        </div>
+        <div class="card" style="padding:14px">
+          <strong>Keynote</strong>
+          <div class="muted">Prof. Visionary · Topic: Urban Digital Twins</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Travel -->
+    <section id="travel" class="container">
+      <h2 data-animate>出行与住宿</h2>
+      <p class="muted" data-animate>从斯德哥尔摩乘火车约 2.5 小时可达 Borlänge。这里可以放抵达方式、签证邀函、推荐酒店等信息。</p>
+      <div class="grid" style="grid-template-columns:1.2fr .8fr; align-items:start" data-animate>
+        <div class="card" style="padding:14px">
+          <h3>如何到达</h3>
+          <ul>
+            <li>✈️ 飞机：抵达 ARN / BMA</li>
+            <li>🚆 火车：SJ 前往 Borlänge C</li>
+            <li>🚌 公交：本地线路或打车</li>
+          </ul>
+          <h3>签证与邀请函</h3>
+          <p class="muted">如需邀请函，请在注册后联系 <a href="mailto:info@example.org">info@example.org</a>。</p>
+        </div>
+        <div class="card" style="padding:0; overflow:hidden">
+          <!-- 可换成静态地图图片或真实地图 iframe -->
+          <svg viewBox="0 0 600 400" role="img" aria-label="地图占位" width="100%" height="100%">
+            <rect width="600" height="400" fill="#e5e7eb" />
+            <circle cx="300" cy="200" r="10" fill="#2563eb" />
+            <text x="310" y="205" font-size="14" fill="#111827">Dalarna University</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sponsors -->
+    <section id="sponsors" class="container">
+      <h2 data-animate>赞助伙伴</h2>
+      <p class="muted" data-animate>感谢以下组织的支持（示例标识）。</p>
+      <div class="logos" data-animate>
+        <div class="logo-card" aria-label="SERC"><span class="muted">SERC</span></div>
+        <div class="logo-card" aria-label="Dalarna University"><span class="muted">DU</span></div>
+        <div class="logo-card" aria-label="City Partner"><span class="muted">CITY</span></div>
+        <div class="logo-card" aria-label="Industry A"><span class="muted">IND-A</span></div>
+        <div class="logo-card" aria-label="Industry B"><span class="muted">IND-B</span></div>
+      </div>
+      <div class="spacer" style="height:10px"></div>
+      <a class="btn secondary" href="#">成为赞助商</a>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="container">
+      <h2 data-animate>联系会议团队</h2>
+      <p class="muted" data-animate>通过邮件或表单与我们联系。</p>
+      <form id="contactForm" class="card" style="padding:14px" data-animate>
+        <div class="grid" style="grid-template-columns:1fr 1fr; gap:12px">
+          <div class="field" style="display:grid; gap:6px">
+            <label for="name">姓名</label>
+            <input id="name" name="name" required placeholder="你的名字" autocomplete="name" />
+          </div>
+          <div class="field" style="display:grid; gap:6px">
+            <label for="email">邮箱</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="field" style="grid-column:1/-1; display:grid; gap:6px">
+            <label for="msg">留言</label>
+            <textarea id="msg" name="message" rows="5" required placeholder="想聊的事儿…"></textarea>
+          </div>
+        </div>
+        <div style="display:flex; gap:.6rem; align-items:center; margin-top:10px">
+          <button class="btn" type="submit">发送</button>
+          <a class="btn secondary" href="mailto:info@example.org">直接发邮件</a>
+          <p id="formHint" class="muted" aria-live="polite" style="margin:0"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div class="cta-bar" role="region" aria-label="快速注册">
+    <div class="inner">
+      <span class="tag">2026 年 7 月 · Borlänge</span>
+      <a class="btn" href="#registration">立即注册</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding:38px 0; border-top:1px solid var(--border); color:var(--muted)">
+      <div>© <span id="year"></span> Your Org · 保留所有权利</div>
+      <div style="display:flex; gap:.6rem">
+        <a class="tag" href="#">Media Kit</a>
+        <a class="tag" href="#">隐私</a>
+        <a class="tag" href="#">联系</a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" class="btn" aria-label="返回顶部">↑</button>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Back to top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.classList.toggle('show', window.scrollY > 500);
+    });
+    toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // Theme toggle
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme){ html.setAttribute('data-theme', savedTheme); }
+    themeBtn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme') || 'auto';
+      const next = current === 'dark' ? 'auto' : current === 'auto' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeBtn.setAttribute('aria-label', `主题：${next}`);
+    });
+
+    // Drawer
+    const drawer = document.getElementById('drawer');
+    const menuBtn = document.getElementById('menuBtn');
+    const closeDrawer = document.getElementById('closeDrawer');
+    menuBtn.addEventListener('click', () => { drawer.showModal(); menuBtn.setAttribute('aria-expanded','true'); });
+    closeDrawer.addEventListener('click', () => { drawer.close(); menuBtn.setAttribute('aria-expanded','false'); });
+    drawer.addEventListener('click', (e) => { if(e.target === drawer){ drawer.close(); menuBtn.setAttribute('aria-expanded','false'); }});
+
+    // Contact form (mailto demo)
+    const form = document.getElementById('contactForm');
+    const hint = document.getElementById('formHint');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name');
+      const email = data.get('email');
+      const message = data.get('message');
+      if(!name || !email || !message){ hint.textContent = '请完整填写信息。'; return; }
+      const subject = encodeURIComponent('Conference Contact');
+      const body = encodeURIComponent(`姓名：${name}\n邮箱：${email}\n\n留言：\n${message}`);
+      window.location.href = `mailto:info@example.org?subject=${subject}&body=${body}`;
+      hint.textContent = '已尝试打开邮件客户端，如无响应请直接发邮至 info@example.org。';
+      form.reset();
+    });
+
+    // Countdown (robust: supports future/ongoing/past)
+    (function(){
+      const el = document.getElementById('countdown');
+      const startStr = el.getAttribute('data-start');
+      if(!startStr) return;
+      const start = new Date(startStr);
+      function fmt(n){ return String(Math.floor(n)).padStart(2,'0'); }
+      function tick(){
+        const now = new Date();
+        const diff = start - now;
+        if (Math.abs(diff) < 1000*60*60*3) { // within 3h → ongoing
+          el.textContent = '活动进行中';
+          return;
+        }
+        if(diff <= 0){
+          el.textContent = '活动已结束';
+          return;
+        }
+        const days = diff / (1000*60*60*24);
+        const hours = (days % 1) * 24;
+        const mins = (hours % 1) * 60;
+        const secs = (mins % 1) * 60;
+        el.textContent = `开幕倒计时：${fmt(days)}天 ${fmt(hours)}时 ${fmt(mins)}分 ${fmt(secs)}秒`;
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    // Reveal animation (intersection observer)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { if(entry.isIntersecting){ entry.target.setAttribute('data-animate',''); io.unobserve(entry.target);} });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('[data-animate]').forEach(el => io.observe(el));
+  </script>
+
+  <!-- Structured data: Event -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Conference 2026",
+    "description": "A template conference on climate-neutral cities and urban simulation.",
+    "startDate": "2026-07-02T09:00:00+02:00",
+    "endDate": "2026-07-04T18:00:00+02:00",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+      "@type": "Place",
+      "name": "Dalarna University",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Borlänge",
+        "addressCountry": "SE"
+      }
+    },
+    "organizer": {"@type": "Organization", "name": "Your Org", "url": "https://example.org"}
+  }
+  </script>
+</body>
+</html>
