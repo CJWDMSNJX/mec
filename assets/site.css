@@ -1,0 +1,355 @@
+/* Design tokens */
+:root{
+  --bg:#ffffff; --bg-elev:#f7f7f9; --card:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b; --primary:#2563eb; --primary-contrast:#ffffff;
+  --border:#e5e7eb; --shadow:0 12px 30px rgba(0,0,0,.08);
+  --ring:0 0 0 3px rgba(37,99,235,.3);
+  --radius:16px;
+  --kth-blue:#0A4C92;
+  --himmel-blue:#6799CE;
+   --ljus-blue:#E6F3FF;
+  --sand: #EDE7E2;
+  --marin-blue: #000F5C;
+  --nav-height:84px; /* 导航更厚，原来是 64px */
+}
+@media (prefers-color-scheme: dark){
+  html[data-theme="auto"]:root{ --bg:#0b1020; --bg-elev:#0f152b; --card:#111834; --text:#e5e7eb; --muted:#a1a8c3; --primary:#60a5fa; --primary-contrast:#0b1020; --border:#202a49; --shadow:0 12px 30px rgba(0,0,0,.5); }
+}
+html[data-theme="dark"]:root{ --bg:#0b1020; --bg-elev:#0f152b; --card:#111834; --text:#e5e7eb; --muted:#a1a8c3; --primary:#60a5fa; --primary-contrast:#0b1020; --border:#202a49; --shadow:0 12px 30px rgba(0,0,0,.5); }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; background:var(--bg); color:var(--text); font:16px/1.6 ui-sans-serif,-apple-system,Segoe UI,Roboto,Helvetica,Arial; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility}
+.container{max-width:1200px; margin-inline:auto; padding-inline:20px}
+.grid{display:grid; gap:1.2rem}
+.btn{display:inline-flex; align-items:center; gap:.5rem; background:var(--primary); color:var(--primary-contrast); border:1px solid transparent; border-radius:14px; padding:.7rem 1rem; font-weight:700; text-decoration:none; box-shadow:var(--shadow)}
+.btn.secondary{background:transparent; color:var(--text); border-color:var(--border)}
+.tag{display:inline-block; padding:.25rem .6rem; border-radius:999px; background:var(--bg-elev); border:1px solid var(--border); color:var(--muted); font-size:.85rem}
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow)}
+.muted{color:var(--muted)}
+
+/* Header & Nav */
+header{
+  position:sticky; top:0; z-index:40;
+  background:linear-gradient(90deg, var(--marin-blue) 0%, var(--kth-blue) 100%);
+  color:#fff;
+  backdrop-filter:saturate(120%) blur(8px);
+  border-bottom:1px solid var(--border);
+}
+nav{height:var(--nav-height); display:flex; align-items:center; justify-content:space-between}
+.brand{display:flex; gap:.6rem; align-items:center; font-weight:900;font-size: 2.0rem}
+.logo{width:28px; height:28px; border-radius:8px; background:var(--primary); color:var(--primary-contrast); display:grid; place-items:center}
+.nav-links{display:none; gap:1rem}
+.nav-links a{color:var(--muted); text-decoration:none; font-weight:700}
+.nav-links a.active,.nav-links a:hover,.nav-links a:focus{color:var(--text)}
+.nav-actions{display:flex; align-items:center; gap:.5rem}
+.menu-btn{background:transparent; border:1px solid var(--border); padding:.45rem .7rem; border-radius:12px}
+
+.nav-links a{
+  color:#fff;              /* 在渐变上保持白色 */
+  text-decoration:none;
+  font-weight:800;         /* 更粗 */
+}
+.nav-links a:hover,.nav-links a:focus{opacity:.9}
+
+header .nav-actions .btn,
+header .menu-btn{
+  font-weight:800;
+  color:#fff;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.45);
+}
+
+.nav-links a {
+  font-size: 1.2rem;  /* 大约19.2px */
+  font-weight: 800;
+}
+
+
+
+/* 桌面端：让链接在可用空间内均匀分布 */
+@media (min-width:900px){
+  .nav-links{
+    display:flex;            /* 保持原有显示 */
+    flex:1;                  /* 占满中间的横向空间 */
+    justify-content:space-evenly; /* 均匀分布 */
+  }
+}
+
+/* 选中/悬停/当前页：文字本身变为 Ljusblå；不加背景 */
+header .nav-links a:hover,
+header .nav-links a:focus,
+header .nav-links a.active{
+  color: var(--ljus-blue);
+  background: transparent;   /* 防止之前的背景样式生效 */
+}
+
+
+
+
+/* Page shells */
+.hero{padding:min(18vh,160px) 0; position:relative; overflow:hidden}
+.hero::before{content:""; position:absolute; inset:0; background:radial-gradient(1200px 600px at 80% -20%, color-mix(in oklab, var(--primary) 30%, transparent), transparent), linear-gradient(to bottom, color-mix(in oklab, var(--bg) 60%, transparent), transparent)}
+.hero h1{font-size:clamp(34px,6vw,64px); line-height:1.05; margin:0}
+.lead{font-size:clamp(18px,2.6vw,22px); color:var(--muted)}
+section{padding:72px 0}
+
+.hero {
+  position: relative;
+  z-index: 0; /* 确保文字是更高的层级 */
+}
+
+.hero::before {
+  z-index: -1; /* 把背景放到最底层 */
+  pointer-events: none; /* 防止背景遮挡鼠标事件 */
+}
+
+.hero h1 {
+  color: var(--bg);            /* Marinblå */
+  font-size: clamp(48px, 7vw, 80px); /* 比原来更大，可根据需要调整 */
+  margin-top: -20px;          /* 减少与上方横栏的间距 */
+}
+
+.hero {
+  position: relative;
+  z-index: 0;
+  background: url("maple.jpg") center/cover no-repeat;
+  padding: min(18vh, 160px) 0; /* 保持原来的内边距 */
+  color: #fff; /* 确保文字在背景上清晰可见 */
+}
+
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0, 0, 0, 0); /* 20% 黑色透明 */
+  z-index: -1;
+}
+
+/*.hero h1 {*/
+/*  text-shadow:*/
+/*    0 3px 12px rgba(0,0,0,.7),  !* 中层 *!*/
+/*    0 2px 6px rgba(0,0,0,.55),  !* 内层柔和阴影 *!*/
+/*    0 1px 3px rgba(0,0,0,.45),  !* 更靠近文字的阴影 *!*/
+/*    0 0 1px rgba(0,0,0,.9);     !* 最细的一圈描边 *!*/
+/*}*/
+
+
+/*.hero .lead {*/
+/*  font-weight: 700;  !* 加粗 *!*/
+/*  color: #E6F3FF;    !* Ljusblå *!*/
+/*  text-shadow:*/
+/*    0 3px 8px rgba(0,0,0,.6),  !* 外层阴影 *!*/
+/*    0 2px 4px rgba(0,0,0,.5),  !* 中层阴影 *!*/
+/*    0 1px 2px rgba(0,0,0,.4);  !* 内层阴影 *!*/
+/*}*/
+
+
+.hero h1 {
+  text-align: center;
+}
+
+.hero > .container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+
+
+
+
+
+
+/* Tables */
+table{width:100%; border-collapse:collapse}
+th,td{padding:.8rem; border-bottom:1px solid var(--border); text-align:left}
+th{font-size:.95rem; color:var(--muted)}
+
+/* Speakers */
+.speakers{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+.speaker{display:grid; overflow:hidden}
+.speaker .thumb{aspect-ratio:4/3; background:var(--bg-elev); border-bottom:1px solid var(--border); display:grid; place-items:center; color:var(--muted)}
+.speaker .content{padding:14px}
+
+/* File tile */
+.file-tile{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:14px; border:1px dashed var(--border); border-radius:12px; background:var(--bg-elev)}
+
+/* Drawer */
+.drawer{position:fixed; inset:0; background:rgba(0,0,0,.35); display:none}
+.drawer[open]{display:block}
+.drawer-panel{position:absolute; inset:0 0 0 auto; width:min(80vw,320px); background:var(--bg); padding:18px; border-left:1px solid var(--border)}
+.drawer a{display:block; padding:12px 8px; color:var(--text); text-decoration:none; border-radius:10px}
+.drawer a:hover{background:var(--bg-elev)}
+
+footer{padding:38px 0; border-top:1px solid var(--border); color:var(--muted)}
+
+#toTop{position:fixed; right:18px; bottom:18px; display:none}
+#toTop.show{display:inline-flex}
+
+
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.55); /* 半透明黑色 */
+  padding: 2.5rem 3rem;            /* 上下 2.5rem，左右 3rem，加宽 */
+  border-radius: 12px;
+  color: #fff;
+  max-width: 1000px;               /* 原 800px -> 加宽到 1000px */
+}
+
+.hero-overlay h1 {
+  margin-top: 0;
+  color: #fff;
+  text-align: center;
+  font-size: clamp(48px, 7vw, 80px);
+  /* 阴影减弱：模糊半径减小、透明度降低 */
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.6),
+    0 1px 4px rgba(0,0,0,.5);
+}
+
+.hero-overlay .lead {
+  font-weight: 700;
+  color: #E6F3FF;
+  text-shadow:
+    0 2px 6px rgba(0,0,0,.5),
+    0 1px 3px rgba(0,0,0,.4);
+  text-align: center;
+}
+
+.hero-overlay .btn-group {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.hero-overlay .lead {
+  line-height: 1.0; /* 默认大约 1.6，这里缩小到 1.3 */
+}
+
+.hero-overlay .btn,
+.hero-overlay .btn.secondary {
+  background: var(--kth-blue);
+  color: #fff; /* 白色文字对比 */
+  border: none; /* 去掉 secondary 的边框 */
+}
+
+.hero-overlay .btn:hover,
+.hero-overlay .btn.secondary:hover {
+  background: var(--marin-blue); /* 稍深的 himmel-blue，用于悬停 */
+}
+
+
+
+/* 让头像变成圆形并固定大小 */
+.speaker .thumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+.speaker .thumb img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%; /* 圆形 */
+  border: 3px solid var(--border);
+}
+
+/* 固定卡片高度，超出的 Bio 可滚动 */
+.speaker.card {
+  display: flex;
+  flex-direction: column;
+  height: 600px; /* 根据需要调整 */
+  overflow: hidden;
+}
+.speaker .content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.speaker .bio-scroll {
+  margin-top: auto; /* 保证标题部分固定在上方，bio 在下方滚动 */
+  overflow-y: auto;
+  max-height: 180px; /* 控制 bio 区域高度 */
+  padding-right: 6px; /* 留出滚动条空间 */
+}
+.speaker .bio-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.speaker .bio-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* 去掉头像背景色和底部分隔线 */
+.speakers .speaker .thumb {
+  background: transparent;   /* 原来是 var(--bg-elev)，改透明 */
+  border-bottom: none;       /* 去掉底线 */
+  padding: 12px;
+}
+
+/* 缩小标题与信息的间距 */
+.speakers .speaker .content h3 {
+  margin: 0 0 4px 0;         /* 原来可能是更大，改小 */
+}
+.speakers .speaker .content p {
+  margin: 2px 0;             /* 原来是默认段落间距，改小 */
+}
+
+/* 加宽卡片 */
+.speakers {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 原 minmax 调大 */
+}
+.speakers .speaker.card {
+  max-width: 340px;          /* 控制单卡最大宽度，可再调 */
+}
+
+.speakers .speaker .bio-scroll {
+  margin-top: 8px; /* 原来可能是 auto，现在改成更小的数值 */
+}
+
+/* 缩小头像和名字之间的间距 */
+.speakers .speaker .thumb {
+  margin-bottom: 4px; /* 原来可能更大，这里改小 */
+}
+
+.speakers .speaker .content h3 {
+  margin-top: 0;     /* 去掉标题顶部的多余间距 */
+}
+
+/* 放大圆形头像 */
+.speakers .speaker .thumb img {
+  width: 180px;   /* 原来可能是 120px 或 140px */
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+}
+
+/* 名字用 Marin Blue */
+.speakers .speaker .content h3 {
+  color: var(--marin-blue); /* 需在 :root 定义 #000F5C */
+}
+
+/* 学校、presentation 文字都用黑色 */
+.speakers .speaker .content p.muted,
+.speakers .speaker .content span.muted {
+  color: var(--text);
+}
+
+/* Bio 用灰色 */
+.speakers .speaker .bio-scroll {
+  color: var(--muted);
+}
+
+/* Quick Links 里的文字用 Marin Blue */
+.file-tile {
+  color: var(--marin-blue); /* 需要在 :root 定义 --marin-blue: #000F5C; */
+}
+
