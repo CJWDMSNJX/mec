@@ -353,3 +353,34 @@ footer{padding:38px 0; border-top:1px solid var(--border); color:var(--muted)}
   color: var(--marin-blue); /* 需要在 :root 定义 --marin-blue: #000F5C; */
 }
 
+
+/* 关键：让导航横向滚动 */
+.nav-links{
+  display:flex;
+  gap: 20px;
+  overflow-x:auto;               /* 横向可滚 */
+  white-space:nowrap;            /* 避免换行 */
+  -webkit-overflow-scrolling:touch; /* iOS 惯性滚动 */
+  scroll-snap-type:x proximity;  /* 可选：滚动吸附更顺滑 */
+  padding-bottom: 6px;           /* 给滚动条留空间，或配合隐藏滚动条 */
+}
+
+/* 每个链接不被压缩，且有吸附点（可选） */
+.nav-links a{
+  flex:0 0 auto;
+  scroll-snap-align:center;
+  text-decoration:none;
+}
+
+/* 小屏时给容器更大的可用空间 */
+@media (max-width: 768px){
+  .site-header .container{
+    overflow: visible;  /* 确保横向溢出不被父级裁掉 */
+  }
+  .brand{ margin-right: 12px; }
+}
+
+/* 可选：隐藏滚动条（仍可滑动） */
+.nav-links::-webkit-scrollbar{ display:none; }
+.nav-links{ scrollbar-width:none; }
+
