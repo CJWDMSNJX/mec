@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Committee | ISG-MEC</title>
+  <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    /* 页面标题 */
+    .committee-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--marin-blue)
+    }
+    /* 委员会网格布局 */
+    .committee-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .committee-grid {
+      display: flex;
+      flex-wrap: wrap;           /* 允许换行 */
+      justify-content: center;   /* 居中排列 */
+      gap: 18px;                  /* 卡片间距 */
+    }
+    /* 单个人员卡片 */
+    .committee-card {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .committee-card {
+      flex: 1 1 200px;           /* 最小宽度 200px，空间够就自动放大 */
+      max-width: 240px;          /* 限制最大宽度 */
+    }
+    /* 头像样式 */
+    .committee-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      margin-bottom: 0.8rem;
+    }
+    .committee-card h3 {
+      margin: 0.3rem 0;
+      font-size: 1.1rem;
+    }
+    .committee-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* 放大头像 */
+    .committee-card img {
+      width: 160px;     /* 原来可能是 120px，这里放大 */
+      height: 160px;
+      object-fit: cover;
+    }
+
+    /* 如果头像是圆形容器内的背景图 */
+    .committee-card .avatar {
+      width: 160px;
+      height: 160px;
+    }
+
+    /* 底部留白 */
+    .committee-grid {
+      padding-bottom: 40px; /* 根据需要调节 */
+    }
+
+    .committee-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑过渡 */
+    }
+
+    .committee-card:hover {
+      transform: translateY(-8px); /* 向上浮起 8px */
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* 阴影更明显 */
+    }
+
+    .committee-card:hover {
+      transform: translateY(-8px) scale(1.03);
+    }
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- header/nav start -->
+  <header class="site-header">
+    <div class="container">
+      <nav aria-label="Primary"><!-- brand removed on home page -->
+        <div class="brand">ISG-MEC</div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="committee.html">Committee</a>
+          <a href="programme.html">Programme</a>
+          <a href="visitors.html">Visitors Info</a>
+          <a href="flyer.html">Flyer</a>
+          <a href="travel.html">Travel</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <dialog id="drawer" class="drawer" aria-label="Mobile menu"><div class="drawer-panel"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px"><strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button></div><a href="programme.html">Programme</a><a href="visitors.html">Visitors Info</a><a href="flyer.html">Flyer</a><a href="travel.html">Travel</a></div></dialog>
+  <!-- header/nav end -->
+
+  <!-- 页面内容 -->
+  <main class="container">
+    <div class="committee-header">
+      <h1>Organization Committee</h1>
+    </div>
+
+    <div class="committee-grid">
+      <!-- 每个人一张卡片，可以替换头像 -->
+      <div class="committee-card">
+        <img src="assets/QX.jpg" alt="Qianwen Xu">
+        <h3>Qianwen Xu</h3>
+        <p>Chair, KTH Royal Institute of Technology</p>
+      </div>
+
+      <div class="committee-card">
+        <img src="assets/AS.webp" alt="Ambra Sannino">
+        <h3>Ambra Sannino</h3>
+        <p>Co-Chair, Vattenfall</p>
+      </div>
+
+      <div class="committee-card">
+        <img src="assets/PL.jpg" alt="Pär Lundström">
+        <h3>Pär Lundström</h3>
+        <p>Installatörsföretagen</p>
+      </div>
+
+      <div class="committee-card">
+        <img src="assets/LN.jpg" alt="Lars Nordström">
+        <h3>Lars Nordström</h3>
+        <p>KTH Royal Institute of Technology</p>
+      </div>
+
+      <div class="committee-card">
+        <img src="assets/JAV.jpg" alt="Jonas Anund Vogel">
+        <h3>Jonas Anund Vogel</h3>
+        <p>KTH Royal Institute of Technology</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
+      © 2025 ISG-MEC
+    </div>
+  </footer>
+
+</body>
+</html>

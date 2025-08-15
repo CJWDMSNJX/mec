@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flyer · ISG‑MEC</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+  <!-- header/nav start -->
+  <header class="site-header">
+    <div class="container">
+      <nav aria-label="Primary"><!-- brand removed on home page -->
+        <div class="brand">ISG-MEC</div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="committee.html">Committee</a>
+          <a href="programme.html">Programme</a>
+          <a href="visitors.html">Visitors Info</a>
+          <a href="flyer.html">Flyer</a>
+          <a href="travel.html">Travel</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <dialog id="drawer" class="drawer" aria-label="Mobile menu"><div class="drawer-panel"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px"><strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button></div><a href="programme.html">Programme</a><a href="visitors.html">Visitors Info</a><a href="flyer.html">Flyer</a><a href="travel.html">Travel</a></div></dialog>
+  <!-- header/nav end -->
+  <main>
+    <section class="container">
+      <h2>Flyer</h2>
+
+      <!-- 下载按钮 -->
+      <div class="file-tile">
+        <div>
+          <strong>Workshop Flyer (PDF)</strong>
+          <div class="muted">Recommended size ≤ 5 MB.</div>
+        </div>
+        <a class="btn" href="./files/flyer.pdf" download>Download PDF</a>
+      </div>
+
+      <!-- 全幅显示 PDF -->
+      <embed src="./files/flyer.pdf" type="application/pdf" width="100%" height="1000px" style="margin-top:20px; border:none;" />
+
+    </section>
+  </main>
+
+
+
+
+  <footer><div class="container">© <span id="year"></span> ISG‑MEC</div></footer>
+  <button id="toTop" class="btn" aria-label="Back to top">↑</button>
+  <script src="assets/site.js" defer></script>
+</body>
+</html>

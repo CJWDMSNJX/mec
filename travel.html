@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Travel · ISG‑MEC</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+  <!-- header/nav start -->
+  <header class="site-header">
+    <div class="container">
+      <nav aria-label="Primary"><!-- brand removed on home page -->
+        <div class="brand">ISG-MEC</div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="committee.html">Committee</a>
+          <a href="programme.html">Programme</a>
+          <a href="visitors.html">Visitors Info</a>
+          <a href="flyer.html">Flyer</a>
+          <a href="travel.html">Travel</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <dialog id="drawer" class="drawer" aria-label="Mobile menu"><div class="drawer-panel"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px"><strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button></div><a href="programme.html">Programme</a><a href="visitors.html">Visitors Info</a><a href="flyer.html">Flyer</a><a href="travel.html">Travel</a></div></dialog>
+  <!-- header/nav end -->
+<main>
+  <section class="container">
+    <h2>Travel to KTH Main Campus</h2>
+    <p class="muted">
+      Find your way to KTH Royal Institute of Technology main campus (Valhallavägen).
+      For latest details see KTH’s official page.
+    </p>
+
+    <div class="grid" style="grid-template-columns:1.1fr .9fr; align-items:start">
+      <!-- 左栏：文字信息 -->
+      <div class="card" style="padding:14px">
+        <h3>By Air</h3>
+        <ul>
+          <li>Stockholm Arlanda Airport (ARN) — long-haul and most European flights.</li>
+          <li>Bromma Stockholm Airport (BMA) — regional flights.</li>
+        </ul>
+
+        <h3>From Airport to City</h3>
+        <ul>
+          <li>Arlanda Express train to Stockholm Central (~20 min), or commuter train, or airport coaches.</li>
+          <li>Taxi services available (fixed-price options recommended).</li>
+        </ul>
+
+        <h3>To KTH Main Campus</h3>
+        <ul>
+          <li>Metro (Tunnelbana) Red Line to <em>Tekniska högskolan</em> station, 5–10 min walk.</li>
+          <li>City buses stop near Valhallavägen/KTH.</li>
+        </ul>
+
+        <h3>Address</h3>
+        <p>KTH Royal Institute of Technology — Valhallavägen Campus (Main Campus), Stockholm.</p>
+        <p class="muted">
+          View on Google Maps:
+          <a href="https://maps.app.goo.gl/1VDQkoVDca6xuNMf9"
+             target="_blank" rel="noopener">KTH main campus</a>.
+        </p>
+      </div>
+
+      <!-- 右栏：地图（点击可放大） -->
+      <div class="card" style="padding:0; overflow:hidden">
+        <button id="openMap"
+                aria-label="Open map preview"
+                style="all:unset; display:block; cursor:zoom-in;">
+          <img src="assets/campus.png" alt="KTH Main Campus Map" width="100%" height="100%">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 灯箱：放大预览（支持滚轮缩放与滚动查看） -->
+  <dialog id="mapLightbox"
+          style="padding:0; border:none; max-width:90vw; max-height:90vh; background:transparent;">
+    <div style="position:relative; background:var(--bg); border-radius:12px; overflow:hidden; box-shadow:var(--shadow);">
+      <!-- 工具栏（无全屏） -->
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:.5rem;
+                  padding:.5rem .75rem; border-bottom:1px solid var(--border); background:var(--bg-elev)">
+        <strong>Map Preview</strong>
+        <div style="display:flex; gap:.4rem; align-items:center;">
+          <button id="zoomOut" class="btn secondary" style="padding:.35rem .6rem">−</button>
+          <span id="zoomVal" class="muted" aria-live="polite" style="min-width:52px; text-align:center">100%</span>
+          <button id="zoomIn" class="btn secondary" style="padding:.35rem .6rem">＋</button>
+          <button id="zoomReset" class="btn secondary" style="padding:.35rem .6rem">100%</button>
+          <button id="closeMap" class="btn secondary" style="padding:.35rem .6rem">✕ Close</button>
+        </div>
+      </div>
+
+      <!-- 可滚动容器：放大后可滚动查看 -->
+      <div id="scrollBox"
+           style="max-width:90vw; max-height:calc(90vh - 56px); overflow:auto; background:#000;">
+        <img id="mapBig" src="assets/campus.png" alt="KTH Main Campus Map - Large"
+             style="display:block; margin:0 auto; transform-origin:center center; transform:scale(1);">
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      const openBtn = document.getElementById('openMap');
+      const dlg = document.getElementById('mapLightbox');
+      const closeBtn = document.getElementById('closeMap');
+      const box = document.getElementById('scrollBox');
+      const img = document.getElementById('mapBig');
+      const zoomIn = document.getElementById('zoomIn');
+      const zoomOut = document.getElementById('zoomOut');
+      const zoomReset = document.getElementById('zoomReset');
+      const zoomVal = document.getElementById('zoomVal');
+
+      let scale = 1;
+      const min = 1, max = 4, step = 0.2;
+
+      function applyScale(cx, cy, delta) {
+        const prev = scale;
+        scale = Math.min(max, Math.max(min, scale + delta));
+        if (scale === prev) return;
+
+        // 以鼠标位置为中心缩放（保持焦点不跳）
+        if (cx != null && cy != null) {
+          const rect = img.getBoundingClientRect();
+          const ox = (cx - rect.left) / rect.width;
+          const oy = (cy - rect.top) / rect.height;
+          img.style.transformOrigin = `${ox * 100}% ${oy * 100}%`;
+        } else {
+          img.style.transformOrigin = 'center center';
+        }
+
+        img.style.transform = `scale(${scale})`;
+        zoomVal.textContent = Math.round(scale * 100) + '%';
+      }
+
+      function resetScale() {
+        scale = 1;
+        img.style.transformOrigin = 'center center';
+        img.style.transform = 'scale(1)';
+        zoomVal.textContent = '100%';
+        // 回到容器左上角
+        box.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+      }
+
+      // 打开
+      openBtn?.addEventListener('click', () => {
+        dlg.showModal();
+        resetScale();
+      });
+
+      // 关闭（按钮 + 点击蒙层）
+      closeBtn?.addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', (e) => {
+        const wrap = dlg.querySelector('div');
+        const r = wrap.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+          dlg.close();
+        }
+      });
+
+      // 按钮缩放
+      zoomIn?.addEventListener('click', () => applyScale(null, null, step));
+      zoomOut?.addEventListener('click', () => applyScale(null, null, -step));
+      zoomReset?.addEventListener('click', resetScale);
+
+      // 滚轮缩放（按住 Ctrl 的浏览器缩放不拦截）
+      box?.addEventListener('wheel', (e) => {
+        if (e.ctrlKey) return;
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? step : -step;
+        applyScale(e.clientX, e.clientY, delta);
+      }, { passive: false });
+
+      // 双击放大/还原
+      img?.addEventListener('dblclick', (e) => {
+        if (scale === 1) applyScale(e.clientX, e.clientY, 1); else resetScale();
+      });
+    })();
+  </script>
+</main>
+
+
+
+
+  <footer><div class="container">© <span id="year"></span> ISG‑MEC</div></footer>
+  <button id="toTop" class="btn" aria-label="Back to top">↑</button>
+  <script src="assets/site.js" defer></script>
+</body>
+</html>
