@@ -97,14 +97,15 @@
   <header class="site-header">
     <div class="container">
       <nav aria-label="Primary"><!-- brand removed on home page -->
-        <div class="brand">ISG-MEC</div>
+        <div class="brand">MEC 2025</div>
         <div class="nav-links">
           <a href="index.html">Home</a>
+          <a href="flyer.html">Programme</a>
+          <a href="visitors.html">Speakers</a>
           <a href="committee.html">Committee</a>
-          <a href="programme.html">Programme</a>
-          <a href="visitors.html">Visitors Info</a>
-          <a href="flyer.html">Flyer</a>
+          <a href="registration.html">Registration</a>
           <a href="travel.html">Travel</a>
+          <a href="sponsors.html">Sponsors</a>
         </div>
       </nav>
     </div>
@@ -113,49 +114,66 @@
   <!-- header/nav end -->
 
   <!-- 页面内容 -->
-  <main class="container">
-    <div class="committee-header">
-      <h1>Organization Committee</h1>
+<!-- 页面内容 -->
+<main class="container">
+  <!-- 第一组：Chairs -->
+  <div class="committee-header">
+    <h1>Organization Chairs</h1>
+  </div>
+
+  <div class="committee-grid">
+    <div class="committee-card">
+      <img src="assets/QX.jpg" alt="Qianwen Xu">
+      <h3>Qianwen Xu</h3>
+      <p>Chair, KTH Royal Institute of Technology</p>
     </div>
 
-    <div class="committee-grid">
-      <!-- 每个人一张卡片，可以替换头像 -->
-      <div class="committee-card">
-        <img src="assets/QX.jpg" alt="Qianwen Xu">
-        <h3>Qianwen Xu</h3>
-        <p>Chair, KTH Royal Institute of Technology</p>
-      </div>
-
-      <div class="committee-card">
-        <img src="assets/AS.webp" alt="Ambra Sannino">
-        <h3>Ambra Sannino</h3>
-        <p>Co-Chair, Vattenfall</p>
-      </div>
-
-      <div class="committee-card">
-        <img src="assets/PL.jpg" alt="Pär Lundström">
-        <h3>Pär Lundström</h3>
-        <p>Installatörsföretagen</p>
-      </div>
-
-      <div class="committee-card">
-        <img src="assets/LN.jpg" alt="Lars Nordström">
-        <h3>Lars Nordström</h3>
-        <p>KTH Royal Institute of Technology</p>
-      </div>
-
-      <div class="committee-card">
-        <img src="assets/JAV.jpg" alt="Jonas Anund Vogel">
-        <h3>Jonas Anund Vogel</h3>
-        <p>KTH Royal Institute of Technology</p>
-      </div>
+    <div class="committee-card">
+      <img src="assets/AS.webp" alt="Ambra Sannino">
+      <h3>Ambra Sannino</h3>
+      <p>Co-Chair, Vattenfall</p>
     </div>
-  </main>
+  </div>
+
+  <!-- 第二组：Members -->
+  <div class="committee-header" style="margin-top:2rem;">
+    <h1>Organization Members</h1>
+  </div>
+
+  <div class="committee-grid">
+    <div class="committee-card">
+      <img src="assets/PL.jpg" alt="Pär Lundström">
+      <h3>Pär Lundström</h3>
+      <p>Installatörsföretagen</p>
+    </div>
+
+    <div class="committee-card">
+      <img src="assets/LN.jpg" alt="Lars Nordström">
+      <h3>Lars Nordström</h3>
+      <p>KTH Royal Institute of Technology</p>
+    </div>
+
+    <div class="committee-card">
+      <img src="assets/JAV.jpg" alt="Jonas Anund Vogel">
+      <h3>Jonas Anund Vogel</h3>
+      <p>KTH Royal Institute of Technology</p>
+    </div>
+  </div>
+
+</main>
+
 
   <!-- 页脚 -->
-  <footer>
-    <div class="container">
-      © 2025 ISG-MEC
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Contact us</strong><br>
+        Email: <a href="mailto:info@isg-mec.org">xuanj@kth.se</a><br>
+        Address: KTH Royal Institute of Technology, Brinellvägen 8, 11428, Stockholm, Sweden
+      </div>
+      <div style="text-align:right;">
+        © <span id="year"></span> ISG-MEC
+      </div>
     </div>
   </footer>
 
