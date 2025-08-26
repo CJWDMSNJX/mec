@@ -5,17 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Programme · ISG‑MEC</title>
   <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    /* Scoped styles — honor site design tokens */
+    .page-programme .lead{margin:4px 0 20px;color:var(--muted);font-size:.98rem}
+    .agenda{display:grid;gap:14px}
+    .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+    .pill{display:inline-flex;align-items:center;gap:.5ch;padding:6px 10px;border-radius:999px;
+      background:var(--ljus-blue); color:var(--marin-blue); font-size:.9rem;white-space:nowrap}
+
+    .accordion-card{
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      background:var(--card,var(--bg));
+      box-shadow:var(--shadow);
+      overflow:clip
+    }
+    .agenda details{background:inherit}
+    .agenda summary{
+      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+      padding:16px 18px;cursor:pointer;list-style:none;
+      font-weight:600
+    }
+    .agenda summary::-webkit-details-marker{display:none}
+    .day-title{font-size:1.05rem;color:var(--text)}
+    .day-sub{font-weight:500;color:var(--muted)}
+    .chev{transition:transform .2s ease;font-size:1.1rem;opacity:.75}
+    details[open] .chev{transform:rotate(90deg)}
+
+    .panel{
+      padding:0 18px 16px;border-top:1px dashed var(--border);
+      background:var(--bg-elev)
+    }
+
+    .slot-group{margin:14px 0 10px}
+    .slot-group h4{margin:14px 0 6px;font-size:1rem;color:var(--text)}
+    .slots{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+    .slot{
+      display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:start;
+      padding:10px 12px;border-radius:12px;background:color-mix(in oklab, var(--primary) 6%, transparent)
+    }
+    .slot .t{font-variant-numeric:tabular-nums;color:var(--muted)}
+    .slot .d{line-height:1.35}
+
+    /* Accent + focus */
+    .agenda summary{border-bottom:1px solid transparent}
+    .agenda summary:hover{background:color-mix(in oklab, var(--primary) 8%, transparent)}
+    .agenda summary:focus-visible{outline:none;box-shadow:var(--ring)}
+
+    /* Subtle divider above bottom download */
+    .page-divider{margin:28px 0 16px;border:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--border),transparent)}
+
+    /* Use KTH palette subtly on the tag */
+    .tag{
+      display:inline-flex;align-items:center;gap:.5ch;padding:4px 8px;border-radius:999px;
+      background:var(--kth-blue);color:var(--primary-contrast);font-size:.8rem
+    }
+
+    @media (max-width:640px){
+      .slot{grid-template-columns:92px 1fr}
+      .agenda summary{grid-template-columns:1fr auto}
+      .day-sub{grid-column:1/-1;font-size:.95rem}
+    }
+  </style>
 </head>
-<body>
+<body class="page-programme">
   <!-- header/nav start -->
   <header class="site-header">
     <div class="container">
-      <nav aria-label="Primary"><!-- brand removed on home page -->
+      <nav aria-label="Primary">
         <div class="brand">MEC 2025</div>
         <div class="nav-links">
           <a href="index.html">Home</a>
-          <a href="flyer.html">Programme</a>
-          <a href="visitors.html">Speakers</a>
+          <a href="programme.html" aria-current="page">Programme</a>
+          <a href="speakers.html">Speakers</a>
           <a href="committee.html">Committee</a>
           <a href="registration.html">Registration</a>
           <a href="travel.html">Travel</a>
@@ -24,46 +87,204 @@
       </nav>
     </div>
   </header>
-  <dialog id="drawer" class="drawer" aria-label="Mobile menu"><div class="drawer-panel"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px"><strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button></div><a href="programme.html">Programme</a><a href="visitors.html">Visitors Info</a><a href="flyer.html">Flyer</a><a href="travel.html">Travel</a></div></dialog>
+  <dialog id="drawer" class="drawer" aria-label="Mobile menu">
+    <div class="drawer-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button>
+      </div>
+      <a href="programme.html">Programme</a>
+      <a href="visitors.html">Visitors Info</a>
+      <a href="flyer.html">Flyer</a>
+      <a href="travel.html">Travel</a>
+    </div>
+  </dialog>
   <!-- header/nav end -->
+
   <main>
     <section class="container">
       <h2>Programme</h2>
-      <p class="muted">Two‑day programme with keynotes, industrial sessions and collaboration activities.</p>
+      <p class="lead">Theme: Enabling Integrated, Resilient, and Sector‑Coupled Local Energy Systems</p>
 
-      <div class="card" style="padding:14px">
-        <h3>Day 1 – October 9, 2025 · Microgrids – Technologies and Grid Integration</h3>
-        <table aria-label="Programme day 1">
-          <tbody>
-            <tr><td>09:00–09:15</td><td><strong>Opening Remarks</strong> — Welcome from IEEE PES/PELS Sweden Chapter and KTH Hosts</td></tr>
-            <tr><td>09:15–10:00</td><td><strong>Keynote 1</strong> — Claudio Canizares, University of Waterloo, Canada (confirmed)</td></tr>
-            <tr><td>10:00–10:45</td><td><strong>Keynote 2</strong> — Marija Ilic, MIT, USA (confirmed)</td></tr>
-            <tr><td>10:45–11:00</td><td>Break</td></tr>
-            <tr><td>11:00–12:15</td><td><strong>Industrial Session A: Grid Companies</strong> — DSO perspectives on microgrids and energy communities — Panelists: E.ON, Vattenfall, Ellevio, Omexom — Moderator: TBD</td></tr>
-            <tr><td>12:15–13:15</td><td>Lunch & Networking</td></tr>
-            <tr><td>13:15–14:00</td><td><strong>Keynote 3</strong> — Yunwei Ryan Li, University of Alberta, Canada (confirmed)</td></tr>
-            <tr><td>14:00–14:45</td><td><strong>Keynote 4</strong> — Ferdinanda Ponci, RWTH, Germany (invited)</td></tr>
-            <tr><td>14:45–15:15</td><td>Coffee Break</td></tr>
-            <tr><td>15:15–16:30</td><td><strong>Industrial Session B: Microgrid Technology Providers</strong> — From pilots to scalable microgrid solutions — Panelists: Hitachi Energy, ABB, Siemens Energy — Moderator: TBD</td></tr>
-            <tr><td>16:30–17:30</td><td><strong>Interactive Session</strong> — Barriers and enablers for scalable microgrid deployment (roundtable / world café)</td></tr>
-            <tr><td>18:30–20:30</td><td>VIP Dinner</td></tr>
-          </tbody>
-        </table>
+      <!-- quick pills -->
+      <div class="pill-row" aria-hidden="true">
+        <span class="tag">MEC 2025</span>
+        <span class="pill">Time: Oct 9–10, 2025</span>
+        <span class="pill">Location: Gradängsalen, Teknikringen 1, KTH main campus</span>
       </div>
 
-      <div class="card" style="padding:14px; margin-top:12px">
-        <h3>Day 2 – October 10, 2025 · Energy Communities – Governance, Digitalization & System Integration</h3>
-        <table aria-label="Programme day 2">
-          <tbody>
-            <tr><td>09:00–09:45</td><td><strong>Keynote 5</strong> — Johanna Lakso, CEO, Power Circle  <em>or</em> Anita Aspegren, CEO, IQ Samhällsbyggnad</td></tr>
-            <tr><td>09:45–10:30</td><td><strong>Keynote 6</strong> — Chongqing Kang, Tsinghua University, China (confirmed)</td></tr>
-            <tr><td>10:30–12:00</td><td><strong>Industrial Session C: Building Sector & Energy Communities</strong> — Deploying smart buildings and real‑world energy communities — Panelists: Innovatum Science Park, WSP, Bravida, Installatörsföretagen, Vasakronan (TBD) — Moderator: TBA</td></tr>
-            <tr><td>12:00–13:00</td><td>Lunch & Networking</td></tr>
-            <tr><td>13:00–13:45</td><td><strong>Keynote 7</strong> — Vladimir Terzija, Newcastle University, UK (confirmed) · Friederich Kupzog, AIT (invited) · Zita Vale, Porto (invited)</td></tr>
-            <tr><td>13:45–14:30</td><td><strong>Keynote 8</strong> — Pedro Rodriguez, LIST · Nikos Hatziargyriou, NTUA (remote) — backups: Qianwen Xu, Lennart Söder</td></tr>
-            <tr><td>14:30–16:30</td><td><strong>Roadmap & Collaboration Session</strong> — Shaping the future together (white paper, future events, collaboration platform)</td></tr>
-          </tbody>
-        </table>
+      <!-- Collapsible agenda cards (all collapsed by default) -->
+      <div class="agenda">
+
+        <!-- Day 0 -->
+        <div class="accordion-card">
+          <details>
+            <summary>
+              <span>
+                <span class="day-title">Day 0 — Oct 8, 2025</span><br>
+                <span class="day-sub">Visit Arholma Microgrid (hosted by Vattenfall)</span>
+              </span>
+              <span class="chev">›</span>
+            </summary>
+            <div class="panel">
+              <div class="slot-group">
+                <ul class="slots">
+                  <li class="slot">
+                    <div class="t">All day</div>
+                    <div class="d">Site visit to Arholma Microgrid, hosted by Vattenfall.</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="accordion-card">
+          <details>
+            <summary>
+              <span>
+                <span class="day-title">Day 1 — Oct 9, 2025</span><br>
+                <span class="day-sub">Theme: Microgrids — Technologies and Grid Integration</span>
+              </span>
+              <span class="chev">›</span>
+            </summary>
+            <div class="panel">
+
+              <div class="slot-group">
+                <h4>Morning Session</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">08:00–09:00</div><div class="d">Registration</div></li>
+                  <li class="slot"><div class="t">09:00–09:15</div><div class="d"><strong>Opening Remarks</strong> — Welcome from IEEE PES/PELS Sweden Chapter and KTH Hosts — Qianwen Xu, KTH, Sweden</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Academic Keynotes</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">09:15–09:45</div><div class="d">Claudio Cañizares, University of Waterloo, Canada — <em>Microgrid Overview</em></div></li>
+                  <li class="slot"><div class="t">09:45–10:15</div><div class="d">Marija Ilić, MIT, USA — <em>The Future of the Electric Power Grid</em></div></li>
+                  <li class="slot"><div class="t">10:15–10:30</div><div class="d">Coffee Break</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Industry Leaders’ Perspectives — DSO Perspectives on Microgrids and Energy Communities</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">10:30–10:45</div><div class="d">Swedish Energy Agency</div></li>
+                  <li class="slot"><div class="t">10:45–11:00</div><div class="d">Vattenfall</div></li>
+                  <li class="slot"><div class="t">11:00–11:15</div><div class="d">Plexigrid</div></li>
+                  <li class="slot"><div class="t">11:15–11:30</div><div class="d">E.ON</div></li>
+                  <li class="slot"><div class="t">11:30–12:00</div><div class="d">Panel Discussion</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <ul class="slots">
+                  <li class="slot"><div class="t">12:00–13:15</div><div class="d">Lunch &amp; Networking</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Afternoon Session</h4>
+                <h4>Academic Keynotes</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">13:15–13:45</div><div class="d">Pedro Rodriguez, LIST, Luxembourg — <em>Revolutionising intelligent grid‑forming buildings</em></div></li>
+                  <li class="slot"><div class="t">13:45–14:15</div><div class="d">Yunwei Ryan Li, University of Alberta, Canada — <em>AC/DC Microgrids: A Modern Solution for Grid Challenges in DERs, EVs, and AI Data Centers</em></div></li>
+                  <li class="slot"><div class="t">14:15–14:30</div><div class="d">Coffee Break</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Industry Leaders’ Perspectives — From Pilots to Scalable Microgrid Solutions</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">14:30–14:45</div><div class="d">ABB</div></li>
+                  <li class="slot"><div class="t">14:45–15:00</div><div class="d">Epiroc</div></li>
+                  <li class="slot"><div class="t">15:00–15:15</div><div class="d">Schneider Electric</div></li>
+                  <li class="slot"><div class="t">15:15–15:30</div><div class="d">Siemens</div></li>
+                  <li class="slot"><div class="t">15:30–16:00</div><div class="d">Panel Discussion</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Interactive Session</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">16:00–17:30</div><div class="d">Brainstorming and discussions</div></li>
+                </ul>
+              </div>
+
+
+            </div>
+          </details>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="accordion-card">
+          <details>
+            <summary>
+              <span>
+                <span class="day-title">Day 2 — Oct 10, 2025</span><br>
+                <span class="day-sub">Theme: Energy Communities — Governance, Digitalization &amp; System Integration</span>
+              </span>
+              <span class="chev">›</span>
+            </summary>
+            <div class="panel">
+
+              <div class="slot-group">
+                <h4>Morning Session — Keynotes</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">09:00–09:30</div><div class="d">Johanna Lakso, CEO, Power Circle — <em>Flexible Grids and Energy Communities: A Swedish Perspective</em></div></li>
+                  <li class="slot"><div class="t">09:30–10:00</div><div class="d">Chongqing Kang, Tsinghua University, China — TBA</div></li>
+                  <li class="slot"><div class="t">10:00–10:15</div><div class="d">Coffee Break</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Industry Leaders’ Perspectives — Deploying Smart Buildings and Real‑World Energy Communities</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">10:15–10:30</div><div class="d">Swedish Energy Agency</div></li>
+                  <li class="slot"><div class="t">10:30–10:45</div><div class="d">Installatörsföretagen</div></li>
+                  <li class="slot"><div class="t">10:45–11:00</div><div class="d">ÖrebroBostäder</div></li>
+                  <li class="slot"><div class="t">11:00–11:15</div><div class="d">WSP</div></li>
+                  <li class="slot"><div class="t">11:15–11:45</div><div class="d">Panel Discussion</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <ul class="slots">
+                  <li class="slot"><div class="t">12:00–13:15</div><div class="d">Lunch &amp; Networking</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Afternoon Session</h4>
+                <h4>Academic Keynotes</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">13:15–13:45</div><div class="d">Vladimir Terzija, Newcastle University, UK — <em>Smart Technology and Big Data Analytics for Data Centres and Energy Communities</em></div></li>
+                  <li class="slot"><div class="t">13:45–14:15</div><div class="d">Hong Li, Zhejiang University, China — <em>Microgrid deployment in China</em></div></li>
+                  <li class="slot"><div class="t">14:15–14:45</div><div class="d">Qianwen Xu, KTH Royal Institute of Technology — <em>Microgrid for smart buildings and communities with Swedish cases</em></div></li>
+                  <li class="slot"><div class="t">14:45–15:00</div><div class="d">Coffee Break</div></li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Roadmap &amp; Collaboration Session — Shaping the Future Together</h4>
+                <ul class="slots">
+                  <li class="slot"><div class="t">15:00–16:30</div><div class="d">• Joint White Paper • Future Events • Collaboration Platform</div></li>
+                </ul>
+              </div>
+
+            </div>
+          </details>
+        </div>
+
+      </div>
+
+      <hr class="page-divider" />
+
+      <!-- Download button at bottom -->
+      <div class="file-tile" style="margin:8px 0 0">
+        <div><strong>Workshop Flyer (PDF)</strong></div>
+        <a class="btn" href="./files/flyer.pdf" download style="--btn-bg:var(--primary);--btn-color:var(--primary-contrast)">Download PDF</a>
       </div>
 
     </section>
@@ -83,6 +304,18 @@
   </footer>
 
   <button id="toTop" class="btn" aria-label="Back to top">↑</button>
+
+  <script>
+    // Make only one <details> open at a time (all collapsed by default)
+    document.addEventListener('click', (e) => {
+      const sm = e.target.closest('summary');
+      if (!sm) return;
+      const current = sm.closest('details');
+      document.querySelectorAll('.agenda details[open]').forEach(d => {
+        if (d !== current) d.removeAttribute('open');
+      });
+    });
+  </script>
   <script src="assets/site.js" defer></script>
 </body>
 </html>

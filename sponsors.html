@@ -6,31 +6,37 @@
   <title>Sponsors · ISG-MEC</title>
   <link rel="stylesheet" href="assets/site.css" />
   <style>
-    .sponsor-list {
+    .sponsor-section {
+      margin-top: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
-      margin-top: 2rem;
-    }
-    .sponsor-item {
-      display: flex;
+      gap: 2rem;
       align-items: center;
-      gap: 1rem;
     }
-    .sponsor-item img {
-      max-height: 60px;
-      max-width: 120px;
+    .sponsor-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .sponsor-row img {
+      max-height: 200px;
+      max-width: 400px;
       object-fit: contain;
     }
-    .sponsor-item strong {
-      font-size: 1.05rem;
+    .sponsor-text {
+      text-align: center;
+      font-size: 1.5rem;
+      color: var(--text);
     }
-    .sponsor-item a {
-      margin-left: 0.5rem;
+    .sponsor-text a {
+      margin-left: 0.4rem;
       color: var(--primary);
       text-decoration: none;
+      font-size: 1.1rem;
     }
-    .sponsor-item a:hover {
+    .sponsor-text a:hover {
       text-decoration: underline;
     }
   </style>
@@ -39,21 +45,31 @@
   <!-- header/nav start -->
   <header class="site-header">
     <div class="container">
-      <nav aria-label="Primary"><!-- brand removed on home page -->
+      <nav aria-label="Primary">
         <div class="brand">MEC 2025</div>
         <div class="nav-links">
           <a href="index.html">Home</a>
-          <a href="flyer.html">Programme</a>
-          <a href="visitors.html">Speakers</a>
+          <a href="programme.html">Programme</a>
+          <a href="speakers.html">Speakers</a>
           <a href="committee.html">Committee</a>
           <a href="registration.html">Registration</a>
           <a href="travel.html">Travel</a>
-          <a href="sponsors.html">Sponsors</a>
+          <a href="sponsors.html" aria-current="page">Sponsors</a>
         </div>
       </nav>
     </div>
   </header>
-  <dialog id="drawer" class="drawer" aria-label="Mobile menu"><div class="drawer-panel"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px"><strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button></div><a href="programme.html">Programme</a><a href="visitors.html">Visitors Info</a><a href="flyer.html">Flyer</a><a href="travel.html">Travel</a></div></dialog>
+  <dialog id="drawer" class="drawer" aria-label="Mobile menu">
+    <div class="drawer-panel">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px">
+        <strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button>
+      </div>
+      <a href="programme.html">Programme</a>
+      <a href="visitors.html">Visitors Info</a>
+      <a href="flyer.html">Flyer</a>
+      <a href="travel.html">Travel</a>
+    </div>
+  </dialog>
   <!-- header/nav end -->
 
   <main>
@@ -61,35 +77,37 @@
       <h2>Sponsors & Supporters</h2>
       <p class="muted">We gratefully acknowledge the support of our sponsors and collaborators.</p>
 
-      <div class="sponsor-list">
-        <!-- IEEE PES -->
-        <div class="sponsor-item">
-          <img src="assets/pes.png" alt="IEEE PES">
-          <strong>IEEE Power &amp; Energy Society</strong>
-        </div>
+      <div class="sponsor-section">
 
-        <!-- IEEE PELS -->
-        <div class="sponsor-item">
+        <!-- 第一行：IEEE PES + PELS -->
+        <div class="sponsor-row">
+          <img src="assets/pes.png" alt="IEEE PES">
           <img src="assets/pels.webp" alt="IEEE PELS">
-          <strong>IEEE Power Electronics Society</strong>
         </div>
 
         <!-- STINT -->
-        <div class="sponsor-item">
-          <strong>Swedish Foundation for International Cooperation in Research and Higher Education (STINT), Sweden</strong>
+        <div class="sponsor-text">
+          Swedish Foundation for International Cooperation in Research and Higher Education (STINT), Sweden
         </div>
 
         <!-- Dig-it Lab -->
-        <div class="sponsor-item">
-          <strong>Dig-it Lab</strong>
+        <div class="sponsor-text">
+          IEEE PELS TC12
+          <a href="https://www.ieee-pels.org/technical-activities/tc-12-energy-access-and-off-grid-systems/" target="_blank" rel="noopener">🔗</a>
+        </div>
+
+        <!-- Dig-it Lab -->
+        <div class="sponsor-text">
+          Dig-it Lab
           <a href="https://www.digitlab.kth.se/" target="_blank" rel="noopener">🔗</a>
         </div>
 
-        <!-- Intelligent Sustainable Grid Lab @ KTH -->
-        <div class="sponsor-item">
-          <strong>Intelligent Sustainable Grid Lab @ KTH</strong>
+        <!-- ISG Lab @ KTH -->
+        <div class="sponsor-text">
+          Intelligent Sustainable Grid Lab @ KTH
           <a href="https://sites.google.com/view/xuisglabkth" target="_blank" rel="noopener">🔗</a>
         </div>
+
       </div>
     </section>
   </main>
