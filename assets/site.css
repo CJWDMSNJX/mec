@@ -175,6 +175,8 @@ th{font-size:.95rem; color:var(--muted)}
 .speaker .thumb{aspect-ratio:4/3; background:var(--bg-elev); border-bottom:1px solid var(--border); display:grid; place-items:center; color:var(--muted)}
 .speaker .content{padding:14px}
 
+
+
 /* File tile */
 .file-tile{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:14px; border:1px dashed var(--border); border-radius:12px; background:var(--bg-elev)}
 
@@ -587,4 +589,80 @@ footer{padding:38px 0; border-top:1px solid var(--border); color:var(--muted)}
   font-weight: 900;        /* 超粗 */
   color: var(--marin-blue);  /* 使用 KTH 蓝 */
   margin-bottom: 3rem;
+}
+
+.accordion-card{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:color-mix(in srgb, var(--ljus-blue) 40%, white 60%);
+  box-shadow:var(--shadow);
+  overflow:clip;
+}
+
+
+/* Industrial Speakers (无 bio 框，更紧凑) */
+.industrial-speakers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.industrial-speaker.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: auto;       /* 高度随内容 */
+}
+.industrial-speaker .thumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.industrial-speaker .thumb img {
+  width: 140px;       /* 比 academic 小一点 */
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+}
+.industrial-speaker .content {
+  text-align: center;
+}
+.industrial-speaker .content h3 {
+  margin: 0 0 4px;
+  color: var(--marin-blue);
+}
+.industrial-speaker .content p {
+  margin: 2px 0;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+/* 一排三个卡片（桌面端） */
+.speakers,
+.industrial-speakers{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* 移除之前可能限制布局的最大宽度 */
+.speakers .speaker.card,
+.industrial-speakers .industrial-speaker.card{
+  max-width: none; /* 覆盖你之前的 max-width: 340px; */
+  width: 100%;
+}
+
+/* 响应式：中屏改两列，小屏改一列（可按需调整断点） */
+@media (max-width: 1000px){
+  .speakers,
+  .industrial-speakers{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px){
+  .speakers,
+  .industrial-speakers{
+    grid-template-columns: 1fr;
+  }
 }
