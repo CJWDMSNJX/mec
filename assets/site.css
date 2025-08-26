@@ -406,3 +406,185 @@ footer{padding:38px 0; border-top:1px solid var(--border); color:var(--muted)}
 .card ul li a {
   text-decoration: none;
 }
+
+
+/* --- 导航栏滚动时阴影 --- */
+.site-header {
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* --- Hero 渐入动画 --- */
+.hero h1, .hero p, .hero .btn-group {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+.hero h1 { animation-delay: 0.1s; }
+.hero p { animation-delay: 0.3s; }
+.hero .btn-group { animation-delay: 0.6s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- 滚动出现动画 --- */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- 返回顶部按钮 --- */
+#toTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+#toTop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* 只在 JS 给出 .pending 时才隐藏；否则默认可见 */
+[data-animate] {
+  will-change: opacity, transform;
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+/* JS 会给要做动画的元素先加 .pending，再移除 */
+[data-animate].pending {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* 可见状态（进入视口后） */
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 无障碍：用户偏好减少动效时，直接可见且无位移 */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate],
+  [data-animate].pending,
+  [data-animate].visible {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.sponsor-text {
+  font-weight: bold;
+}
+
+/* --- Registration layout (light cards + KTH-blue buttons) --- */
+.reg-intro{
+  text-align:center;
+  margin-bottom:2rem;
+}
+
+.registration-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.reg-card{
+  padding:2rem 1.5rem;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--card);
+  box-shadow:var(--shadow);
+  text-align:center;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.reg-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 30px rgba(0,0,0,.15);
+}
+.reg-card h3{
+  margin:0 0 .5rem 0;
+  color:var(--marin-blue);
+}
+.reg-card p{
+  margin:0 0 1rem 0;
+  color:var(--muted);
+}
+
+/* KTH-blue button variant */
+.btn.kth{
+  background:var(--kth-blue);
+  color:#fff; /* 与主题对比强 */
+  border:1px solid transparent;
+}
+.btn.kth:hover{ background:var(--marin-blue); }
+.btn.kth:focus-visible{
+  outline:0;
+  box-shadow:var(--ring);
+}
+
+/* Responsive */
+@media (max-width: 720px){
+  .registration-grid{ grid-template-columns:1fr; }
+}
+
+
+/* --- Bigger Registration Cards --- */
+.reg-card{
+  padding: 2.5rem 2rem;          /* 原来 2rem 1.5rem -> 放大 */
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--card);
+  box-shadow:var(--shadow);
+  text-align:center;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.reg-card:hover{
+  transform:translateY(-8px);    /* 上浮更多 */
+  box-shadow:0 14px 36px rgba(0,0,0,.18);
+}
+.reg-card h3{
+  margin:0 0 0.75rem 0;
+  font-size:1.6rem;              /* 原来 ~1.3rem，明显放大 */
+  font-weight:800;
+  color:var(--marin-blue);
+}
+.reg-card p{
+  margin:0 0 1.25rem 0;
+  font-size:1.1rem;              /* 原来 1rem 左右 -> 放大 */
+  line-height:1.5;
+  color:var(--muted);
+}
+.reg-card .btn.kth{
+  font-size:1.05rem;             /* 放大按钮文字 */
+  padding:0.9rem 1.4rem;         /* 按钮更大 */
+  border-radius:18px;
+}
+
+/* --- Registration Title --- */
+.container > h2 {
+  text-align: center;
+  font-size: 2.4rem;       /* 放大标题，大约 38px */
+  font-weight: 900;        /* 超粗 */
+  color: var(--marin-blue);  /* 使用 KTH 蓝 */
+  margin-bottom: 3rem;
+}
