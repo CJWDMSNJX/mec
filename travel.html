@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Travel · ISG‑MEC</title>
+  <title>Travel · ISG-MEC</title>
   <link rel="stylesheet" href="assets/site.css" />
   <style>
     /* 仅本页的小增强，使用你的主题变量 */
@@ -22,6 +22,9 @@
     .btn.map {
       --btn-bg: var(--kth-blue); --btn-color: var(--primary-contrast);
     }
+    /* 简单的居中标题工具类（与 h2 同级使用） */
+    .section-title { text-align: center; margin: 8px 0 12px; }
+
     @media (max-width: 900px){
       .travel-info { gap: 12px; }
     }
@@ -60,26 +63,25 @@
 
 <main>
   <section class="container">
-    <!-- 新增：日期 + 地址 + 地图按钮 -->
-      <div class="travel-item">
-        <h4>9 - 10 Oct — Gradängsalen, Teknikringen 1, at KTH main campus, Stockholm</h4>
-        <p class="travel-meta">
-          Google map direction:
-          <span>KTH Teknikringen 1</span>
-          <a href="https://www.google.com/maps/search/?api=1&query=Teknikringen+1%2C+Stockholm"
-             target="_blank" rel="noopener"
-             aria-label="Open Teknikringen 1 in Google Maps"
-             style="margin-left:6px; text-decoration:none; font-size:1.1em; color:var(--primary)">
-            📍
-          </a>
-        </p>
-      </div>
+    <!-- 新增：Workshop Location 标题（居中，h2 大小） -->
+    <h2 class="section-title">Workshop Location</h2>
+
+    <!-- 日期 + 地址 + 地图按钮 -->
+    <div class="travel-item">
+      <h4>9 - 10 Oct — Gradängsalen, Teknikringen 1, at KTH main campus, Stockholm</h4>
+      <p class="travel-meta">
+        Google map direction:
+        <span>KTH Teknikringen 1</span>
+        <a href="https://www.google.com/maps/search/?api=1&query=Teknikringen+1%2C+Stockholm"
+           target="_blank" rel="noopener"
+           aria-label="Open Teknikringen 1 in Google Maps"
+           style="margin-left:6px; text-decoration:none; font-size:1.1em; color:var(--primary)">
+          📍
+        </a>
+      </p>
     </div>
 
     <h2>Travel to KTH Main Campus</h2>
-    <p class="muted">Find your way to KTH Royal Institute of Technology main campus (Valhallavägen).</p>
-
-
 
     <div class="grid" style="grid-template-columns:1.1fr .9fr; align-items:start; gap:16px">
       <!-- 左栏：出行信息（保留原内容，移除了酒店） -->
@@ -118,9 +120,11 @@
       </div>
     </div>
 
-    <!-- 新增：酒店推荐独立卡片（放在最下面） -->
-    <div class="card" style="padding:14px; margin-top:16px">
-      <h3>Hotel Recommendations</h3>
+    <!-- 新增：Hotel Recommendations 标题（居中，h2 大小） -->
+    <h2 class="section-title" style="margin-top:16px">Hotel Recommendations</h2>
+
+    <!-- 酒店推荐卡片（移除内部 h3 标题） -->
+    <div class="card" style="padding:14px;">
       <ul>
         <li>
           Elite Hotel Arcadia Stockholm
@@ -164,6 +168,21 @@
     </div>
   </dialog>
 
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Contact us</strong><br>
+        Email: <a href="mailto:info@isg-mec.org">xuanj@kth.se</a><br>
+        Address: KTH Royal Institute of Technology, Brinellvägen 8, 11428, Stockholm, Sweden
+      </div>
+      <div style="text-align:right;">
+        © <span id="year"></span> ISG-MEC
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" class="btn" aria-label="Back to top">↑</button>
+  <script src="assets/site.js" defer></script>
   <script>
     (function () {
       const openBtn = document.getElementById('openMap');
@@ -237,21 +256,5 @@
     })();
   </script>
 </main>
-
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <strong>Contact us</strong><br>
-        Email: <a href="mailto:info@isg-mec.org">xuanj@kth.se</a><br>
-        Address: KTH Royal Institute of Technology, Brinellvägen 8, 11428, Stockholm, Sweden
-      </div>
-      <div style="text-align:right;">
-        © <span id="year"></span> ISG-MEC
-      </div>
-    </div>
-  </footer>
-
-  <button id="toTop" class="btn" aria-label="Back to top">↑</button>
-  <script src="assets/site.js" defer></script>
 </body>
 </html>

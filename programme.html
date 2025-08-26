@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Programme · ISG‑MEC</title>
+  <title>Programme · ISG-MEC</title>
   <link rel="stylesheet" href="assets/site.css" />
   <style>
     /* Scoped styles — honor site design tokens */
@@ -20,21 +20,36 @@
       box-shadow:var(--shadow);
       overflow:clip
     }
-    .agenda details{background:inherit}
-    .agenda summary{
-      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
-      padding:16px 18px;cursor:pointer;list-style:none;
-      font-weight:600
+
+    /* —— Color swap: big header is light; meta pill is blue —— */
+    .agenda summary {
+      display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;
+      padding:16px 18px;cursor:pointer;list-style:none;border-bottom:1px solid transparent;
+      background:var(--ljus-blue);   /* 这里改颜色 */
+      color:var(--text);
+      font-weight:700;
     }
+
     .agenda summary::-webkit-details-marker{display:none}
-    .day-title{font-size:1.05rem;color:var(--text)}
-    .day-sub{font-weight:500;color:var(--muted)}
-    .chev{transition:transform .2s ease;font-size:1.1rem;opacity:.75}
+    .agenda summary:hover{filter:brightness(1.03)}
+    .agenda details[open] summary{
+      background: var(--ljus-blue);   /* 与收起时一致 */
+    }
+
+    .day-title{font-size:1.05rem}
+    .day-sub{font-weight:500;opacity:.95}
+    .chev{transition:transform .2s ease;font-size:1.1rem;opacity:.9}
     details[open] .chev{transform:rotate(90deg)}
+    .summary-meta{
+      display:inline-flex;align-items:center;gap:.6ch;
+      padding:.35rem .6rem;border-radius:999px;
+      background:var(--kth-blue); color:var(--primary-contrast); /* swapped */
+      font-weight:700; font-size:.9rem
+    }
 
     .panel{
       padding:0 18px 16px;border-top:1px dashed var(--border);
-      background:var(--bg-elev)
+      background:var(--bg-elev); color:var(--text)
     }
 
     .slot-group{margin:14px 0 10px}
@@ -45,18 +60,17 @@
       padding:10px 12px;border-radius:12px;background:color-mix(in oklab, var(--primary) 6%, transparent)
     }
     .slot .t{font-variant-numeric:tabular-nums;color:var(--muted)}
-    .slot .d{line-height:1.35}
-
-    /* Accent + focus */
-    .agenda summary{border-bottom:1px solid transparent}
-    .agenda summary:hover{background:color-mix(in oklab, var(--primary) 8%, transparent)}
-    .agenda summary:focus-visible{outline:none;box-shadow:var(--ring)}
+    .slot .d{line-height:1.45}
+    .slot .d p{margin:.15rem 0}          /* clearer hierarchy for multi-line speakers */
+    .slot .d em{opacity:.9}
+    .slot .d ul{margin:.15rem 0 .15rem 1.1rem}  /* industry lists */
+    .slot .d li{margin:.1rem 0}
 
     /* Subtle divider above bottom download */
     .page-divider{margin:28px 0 16px;border:0;height:1px;
       background:linear-gradient(90deg,transparent,var(--border),transparent)}
 
-    /* Use KTH palette subtly on the tag */
+    /* Tag using KTH palette */
     .tag{
       display:inline-flex;align-items:center;gap:.5ch;padding:4px 8px;border-radius:999px;
       background:var(--kth-blue);color:var(--primary-contrast);font-size:.8rem
@@ -64,10 +78,61 @@
 
     @media (max-width:640px){
       .slot{grid-template-columns:92px 1fr}
-      .agenda summary{grid-template-columns:1fr auto}
       .day-sub{grid-column:1/-1;font-size:.95rem}
+      .agenda summary{grid-template-columns:1fr auto auto}
+      .summary-meta{font-size:.85rem}
     }
+
+    /* summary 外观按钮化 */
+    .agenda summary {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 16px 18px;
+      cursor: pointer;
+      list-style: none;
+      background: var(--ljus-blue);
+      border-left: 4px solid var(--kth-blue);
+      font-weight: 700;
+      transition: box-shadow .2s ease, filter .2s ease;
+    }
+    .agenda summary:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--kth-blue) 20%, transparent);
+    }
+
+    /* 右侧CTA样式 */
+    .summary-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .5ch;
+    }
+    .chev {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--kth-blue);
+      color: var(--primary-contrast);
+      font-size: 1.1rem;
+      transition: transform .2s ease;
+    }
+    .hint::before {
+      content: "Show more";
+      color: var(--kth-blue);
+      font-size: .9rem;
+      font-weight: 600;
+    }
+
+    /* 打开时状态 */
+    details[open] .chev { transform: rotate(90deg); }
+    details[open] .hint::before { content: "Show less"; }
+
   </style>
+
+
 </head>
 <body class="page-programme">
   <!-- header/nav start -->
@@ -93,7 +158,7 @@
         <strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button>
       </div>
       <a href="programme.html">Programme</a>
-      <a href="visitors.html">Visitors Info</a>
+      <a href="speakers.html">Visitors Info</a>
       <a href="flyer.html">Flyer</a>
       <a href="travel.html">Travel</a>
     </div>
@@ -104,25 +169,29 @@
     <section class="container">
       <h2>Programme</h2>
 
-      <!-- quick pills -->
-      <div class="pill-row" aria-hidden="true">
-        <span class="tag">MEC 2025</span>
-        <span class="pill">Time: Oct 9–10, 2025</span>
-        <span class="pill">Location: Gradängsalen, Teknikringen 1, KTH main campus</span>
+      <!-- Download button at bottom -->
+      <div class="file-tile" style="margin:8px 0 0">
+        <div><strong>Programme Schedule (PDF)</strong></div>
+        <a class="btn" href="./files/flyer.pdf" download style="--btn-bg:var(--primary);--btn-color:var(--primary-contrast)">Download PDF</a>
       </div>
 
-      <!-- Collapsible agenda cards (all collapsed by default) -->
+      <div style="height:20px;"></div>
+
+      <!-- Collapsible agenda cards -->
       <div class="agenda">
 
         <!-- Day 0 -->
         <div class="accordion-card">
           <details>
-            <summary>
+            <summary aria-label="Toggle Day 0">
               <span>
-                <span class="day-title">Day 0 — Oct 8, 2025</span><br>
+                <span class="day-title">Day 0 — Oct 8, 2025 (All day)</span><br>
                 <span class="day-sub">Visit Arholma Microgrid (hosted by Vattenfall)</span>
               </span>
-              <span class="chev">›</span>
+              <span class="summary-cta">
+                <span class="chev" aria-hidden="true">›</span>
+                <span class="hint" aria-hidden="true"></span>
+              </span>
             </summary>
             <div class="panel">
               <div class="slot-group">
@@ -137,80 +206,140 @@
           </details>
         </div>
 
+
+
         <!-- Day 1 -->
         <div class="accordion-card">
           <details>
-            <summary>
+            <summary aria-label="Toggle Day 1">
               <span>
-                <span class="day-title">Day 1 — Oct 9, 2025</span><br>
+                <span class="day-title">Day 1 — Oct 9, 2025 (08:00–17:30)</span><br>
                 <span class="day-sub">Theme: Microgrids — Technologies and Grid Integration</span>
               </span>
-              <span class="chev">›</span>
+              <span class="summary-cta">
+                <span class="chev" aria-hidden="true">›</span>
+                <span class="hint" aria-hidden="true"></span>
+              </span>
             </summary>
             <div class="panel">
 
               <div class="slot-group">
-                <h4>Morning Session</h4>
+                <h4>Morning</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">08:00–09:00</div><div class="d">Registration</div></li>
-                  <li class="slot"><div class="t">09:00–09:15</div><div class="d"><strong>Opening Remarks</strong> — Welcome from IEEE PES/PELS Sweden Chapter and KTH Hosts — Qianwen Xu, KTH, Sweden</div></li>
+                  <li class="slot">
+                    <div class="t">08:00–09:00</div>
+                    <div class="d">Registration.</div>
+                  </li>
+                  <li class="slot">
+                    <div class="t">09:00–09:15</div>
+                    <div class="d">
+                      <p><strong>Opening Remarks</strong></p>
+                      <p><em>IEEE PES/PELS Sweden Chapter and KTH Hosts</em></p>
+                      <p>Qianwen Xu, KTH, Sweden</p>
+                    </div>
+                  </li>
                 </ul>
               </div>
 
               <div class="slot-group">
                 <h4>Academic Keynotes</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">09:15–09:45</div><div class="d">Claudio Cañizares, University of Waterloo, Canada — <em>Microgrid Overview</em></div></li>
-                  <li class="slot"><div class="t">09:45–10:15</div><div class="d">Marija Ilić, MIT, USA — <em>The Future of the Electric Power Grid</em></div></li>
-                  <li class="slot"><div class="t">10:15–10:30</div><div class="d">Coffee Break</div></li>
+                  <li class="slot">
+                    <div class="t">09:15–10:45</div>
+                    <div class="d">
+                      <p><strong>Claudio Cañizares</strong><br>
+                        <em>University of Waterloo, Canada</em><br>
+                        Microgrid Overview
+                      </p>
+                      <p><strong>Marija Ilić</strong><br>
+                        <em>MIT, USA</em><br>
+                        Dynamic Monitoring and Decision Systems (DyMonDS) for End-to-End Electricity Services
+                      </p>
+                    </div>
+                  </li>
+                  <li class="slot">
+                    <div class="t">10:45–11:00</div>
+                    <div class="d">Coffee Break.</div>
+                  </li>
                 </ul>
               </div>
 
               <div class="slot-group">
-                <h4>Industry Leaders’ Perspectives — DSO Perspectives on Microgrids and Energy Communities</h4>
+                <h4>Industry Leaders’ Perspectives &amp; Panel — Flexible and resilient grid with microgrids and energy communities</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">10:30–10:45</div><div class="d">Swedish Energy Agency</div></li>
-                  <li class="slot"><div class="t">10:45–11:00</div><div class="d">Vattenfall</div></li>
-                  <li class="slot"><div class="t">11:00–11:15</div><div class="d">Plexigrid</div></li>
-                  <li class="slot"><div class="t">11:15–11:30</div><div class="d">E.ON</div></li>
-                  <li class="slot"><div class="t">11:30–12:00</div><div class="d">Panel Discussion</div></li>
+                  <li class="slot">
+                    <div class="t">11:00–12:20</div>
+                    <div class="d">
+                      <ul>
+                        <li>Swedish Energy Agency (Rep. TBA)</li>
+                        <li><strong>Fredrik Carlsson</strong>, R&amp;D Portfolio Manager, <em>Vattenfall</em></li>
+                        <li>E.ON (Rep. TBA)</li>
+                        <li><strong>Cathrin Iden</strong>, Network Sales Manager Nordics, <em>Milence</em></li>
+                        <li><strong>Jonas Wahlman</strong>, Senior Manager, Energy and Nuclear Advisory, <em>WSP</em></li>
+                      </ul>
+                    </div>
+                  </li>
                 </ul>
               </div>
 
               <div class="slot-group">
                 <ul class="slots">
-                  <li class="slot"><div class="t">12:00–13:15</div><div class="d">Lunch &amp; Networking</div></li>
+                  <li class="slot">
+                    <div class="t">12:30–13:30</div>
+                    <div class="d">Lunch &amp; Networking.</div>
+                  </li>
                 </ul>
               </div>
 
               <div class="slot-group">
-                <h4>Afternoon Session</h4>
                 <h4>Academic Keynotes</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">13:15–13:45</div><div class="d">Pedro Rodriguez, LIST, Luxembourg — <em>Revolutionising intelligent grid‑forming buildings</em></div></li>
-                  <li class="slot"><div class="t">13:45–14:15</div><div class="d">Yunwei Ryan Li, University of Alberta, Canada — <em>AC/DC Microgrids: A Modern Solution for Grid Challenges in DERs, EVs, and AI Data Centers</em></div></li>
-                  <li class="slot"><div class="t">14:15–14:30</div><div class="d">Coffee Break</div></li>
+                  <li class="slot">
+                    <div class="t">13:30–15:00</div>
+                    <div class="d">
+                      <p><strong>Pedro Rodriguez</strong><br>
+                        <em>LIST, Luxembourg</em><br>
+                        Revolutionising intelligent grid-forming buildings
+                      </p>
+                      <p><strong>Yunwei Ryan Li</strong><br>
+                        <em>University of Alberta, Canada</em><br>
+                        Hybrid AC/DC Microgrids: Tackling Today’s Grid Challenges for DERs, EVs, and AI Data Centers
+                      </p>
+                    </div>
+                  </li>
+                  <li class="slot">
+                    <div class="t">15:00–15:20</div>
+                    <div class="d">Coffee Break.</div>
+                  </li>
                 </ul>
               </div>
 
               <div class="slot-group">
-                <h4>Industry Leaders’ Perspectives — From Pilots to Scalable Microgrid Solutions</h4>
+                <h4>Industry Leaders’ Perspectives &amp; Panel — Microgrid technology and grid integration</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">14:30–14:45</div><div class="d">ABB</div></li>
-                  <li class="slot"><div class="t">14:45–15:00</div><div class="d">Epiroc</div></li>
-                  <li class="slot"><div class="t">15:00–15:15</div><div class="d">Schneider Electric</div></li>
-                  <li class="slot"><div class="t">15:15–15:30</div><div class="d">Siemens</div></li>
-                  <li class="slot"><div class="t">15:30–16:00</div><div class="d">Panel Discussion</div></li>
+                  <li class="slot">
+                    <div class="t">15:20–16:30</div>
+                    <div class="d">
+                      <ul>
+                        <li><strong>Linda-maria Wadman</strong>, COO, <em>Plexigrid</em></li>
+                        <li><strong>Ritwik Majumder</strong>, Senior Principal Engineer, <em>Epiroc</em></li>
+                        <li><strong>Michell Sävenmark</strong>, Digital Power and Microgrid Manager, <em>Schneider Electric</em></li>
+                        <li>Siemens (Rep. TBA)</li>
+                      </ul>
+                    </div>
+                  </li>
                 </ul>
               </div>
 
               <div class="slot-group">
                 <h4>Interactive Session</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">16:00–17:30</div><div class="d">Brainstorming and discussions</div></li>
+                  <li class="slot">
+                    <div class="t">16:30–17:30</div>
+                    <div class="d">Networking and discussions.</div>
+                  </li>
                 </ul>
               </div>
-
 
             </div>
           </details>
@@ -219,56 +348,102 @@
         <!-- Day 2 -->
         <div class="accordion-card">
           <details>
-            <summary>
+            <summary aria-label="Toggle Day 2">
               <span>
-                <span class="day-title">Day 2 — Oct 10, 2025</span><br>
+                <span class="day-title">Day 2 — Oct 10, 2025 (09:00–17:30)</span><br>
                 <span class="day-sub">Theme: Energy Communities — Governance, Digitalization &amp; System Integration</span>
               </span>
-              <span class="chev">›</span>
+              <span class="summary-cta">
+                <span class="chev" aria-hidden="true">›</span>
+                <span class="hint" aria-hidden="true"></span>
+              </span>
             </summary>
             <div class="panel">
 
               <div class="slot-group">
-                <h4>Morning Session — Keynotes</h4>
-                <ul class="slots">
-                  <li class="slot"><div class="t">09:00–09:30</div><div class="d">Johanna Lakso, CEO, Power Circle — <em>Flexible Grids and Energy Communities: A Swedish Perspective</em></div></li>
-                  <li class="slot"><div class="t">09:30–10:00</div><div class="d">Chongqing Kang, Tsinghua University, China — TBA</div></li>
-                  <li class="slot"><div class="t">10:00–10:15</div><div class="d">Coffee Break</div></li>
-                </ul>
-              </div>
-
-              <div class="slot-group">
-                <h4>Industry Leaders’ Perspectives — Deploying Smart Buildings and Real‑World Energy Communities</h4>
-                <ul class="slots">
-                  <li class="slot"><div class="t">10:15–10:30</div><div class="d">Swedish Energy Agency</div></li>
-                  <li class="slot"><div class="t">10:30–10:45</div><div class="d">Installatörsföretagen</div></li>
-                  <li class="slot"><div class="t">10:45–11:00</div><div class="d">ÖrebroBostäder</div></li>
-                  <li class="slot"><div class="t">11:00–11:15</div><div class="d">WSP</div></li>
-                  <li class="slot"><div class="t">11:15–11:45</div><div class="d">Panel Discussion</div></li>
-                </ul>
-              </div>
-
-              <div class="slot-group">
-                <ul class="slots">
-                  <li class="slot"><div class="t">12:00–13:15</div><div class="d">Lunch &amp; Networking</div></li>
-                </ul>
-              </div>
-
-              <div class="slot-group">
-                <h4>Afternoon Session</h4>
                 <h4>Academic Keynotes</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">13:15–13:45</div><div class="d">Vladimir Terzija, Newcastle University, UK — <em>Smart Technology and Big Data Analytics for Data Centres and Energy Communities</em></div></li>
-                  <li class="slot"><div class="t">13:45–14:15</div><div class="d">Hong Li, Zhejiang University, China — <em>Microgrid deployment in China</em></div></li>
-                  <li class="slot"><div class="t">14:15–14:45</div><div class="d">Qianwen Xu, KTH Royal Institute of Technology — <em>Microgrid for smart buildings and communities with Swedish cases</em></div></li>
-                  <li class="slot"><div class="t">14:45–15:00</div><div class="d">Coffee Break</div></li>
+                  <li class="slot">
+                    <div class="t">09:00–10:30</div>
+                    <div class="d">
+                      <p><strong>Johanna Lakso</strong><br>
+                        <em>CEO, Power Circle</em><br>
+                        Flexible Grids and Energy Communities: A Swedish Perspective
+                      </p>
+                      <p><strong>Chongqing Kang</strong><br>
+                        <em>Tsinghua University, China</em><br>
+                        Virtual power plants and flexible grids
+                      </p>
+                    </div>
+                  </li>
+                  <li class="slot">
+                    <div class="t">10:30–10:50</div>
+                    <div class="d">Coffee Break.</div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Industry Leaders’ Perspectives — Smart buildings, transportation electrification and energy communities</h4>
+                <ul class="slots">
+                  <li class="slot">
+                    <div class="t">10:50–12:00</div>
+                    <div class="d">
+                      <ul>
+                        <li><strong>Sonja Monica Berlijn</strong>, Business Director, <em>DNV</em></li>
+                        <li><strong>Pär Lundström</strong>, Senior Policy Advisor, <em>The Swedish Installation Federation</em></li>
+                        <li><strong>Ahmed Abdelhakim</strong>, Global Product Manager — Onboard DC Grid, <em>ABB</em></li>
+                        <li><strong>Magnus Kuschel</strong>, Innovation Lead, <em>Innovatum Science Park</em></li>
+                      </ul>
+                      <p><em>Panel Discussion</em></p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <ul class="slots">
+                  <li class="slot">
+                    <div class="t">12:00–13:30</div>
+                    <div class="d">Lunch &amp; Networking.</div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="slot-group">
+                <h4>Academic Keynotes</h4>
+                <ul class="slots">
+                  <li class="slot">
+                    <div class="t">13:30–15:30</div>
+                    <div class="d">
+                      <p><strong>Vladimir Terzija</strong><br>
+                        <em>Newcastle University, UK</em><br>
+                        Smart Technology and Big Data Analytics for Data Centres and Energy Communities
+                      </p>
+                      <p><strong>Hong Li</strong><br>
+                        <em>Zhejiang University, China</em><br>
+                        Microgrid deployment in China
+                      </p>
+                      <p><strong>Qianwen Xu</strong><br>
+                        <em>KTH Royal Institute of Technology</em><br>
+                        Adaptive integrated modular microgrid for sustainable communities
+                      </p>
+                    </div>
+                  </li>
+                  <li class="slot">
+                    <div class="t">15:30–15:45</div>
+                    <div class="d">Coffee Break.</div>
+                  </li>
                 </ul>
               </div>
 
               <div class="slot-group">
                 <h4>Roadmap &amp; Collaboration Session — Shaping the Future Together</h4>
                 <ul class="slots">
-                  <li class="slot"><div class="t">15:00–16:30</div><div class="d">• Joint White Paper • Future Events • Collaboration Platform</div></li>
+                  <li class="slot">
+                    <div class="t">15:45–17:30</div>
+                    <div class="d">• Joint White Paper • Future Events • Collaboration Platform.</div>
+                  </li>
                 </ul>
               </div>
 
@@ -279,12 +454,6 @@
       </div>
 
       <hr class="page-divider" />
-
-      <!-- Download button at bottom -->
-      <div class="file-tile" style="margin:8px 0 0">
-        <div><strong>Workshop Flyer (PDF)</strong></div>
-        <a class="btn" href="./files/flyer.pdf" download style="--btn-bg:var(--primary);--btn-color:var(--primary-contrast)">Download PDF</a>
-      </div>
 
     </section>
   </main>

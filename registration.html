@@ -5,61 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Registration · ISG-MEC</title>
   <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    .reg-link {
+      font-weight: bold;
+      color: var(--kth-blue);
+      text-decoration: none;
+      font-size: 1.15rem;
+    }
+    .reg-link:hover {
+      text-decoration: underline;
+    }
+    .important-box {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--ljus-blue);
+      font-size: 1.1rem; /* 放大整体文字 */
+    }
+    .important-box h3 {
+      margin-top: 0;
+      color: var(--kth-blue);
+      font-size: 1.3rem; /* 标题更大 */
+    }
+    .reg-icon {
+      margin-right: 0.4em;
+    }
+  </style>
 </head>
 <body>
   <!-- header/nav start -->
   <header class="site-header">
     <div class="container">
-      <nav aria-label="Primary"><!-- brand removed on home page -->
+      <nav aria-label="Primary">
         <div class="brand">MEC 2025</div>
         <div class="nav-links">
           <a href="index.html">Home</a>
           <a href="programme.html">Programme</a>
           <a href="speakers.html">Speakers</a>
           <a href="committee.html">Committee</a>
-          <a href="registration.html">Registration</a>
+          <a href="registration.html" class="active">Registration</a>
           <a href="travel.html">Travel</a>
           <a href="sponsors.html">Sponsors</a>
         </div>
       </nav>
     </div>
   </header>
-  <dialog id="drawer" class="drawer" aria-label="Mobile menu"><div class="drawer-panel"><div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px"><strong>Menu</strong><button id="closeDrawer" class="btn secondary">✕</button></div><a href="programme.html">Programme</a><a href="visitors.html">Visitors Info</a><a href="flyer.html">Flyer</a><a href="travel.html">Travel</a></div></dialog>
   <!-- header/nav end -->
 
   <main>
     <section class="container">
-      <h2>Registration Open</h2>
-      <p class="muted reg-intro">Please register for the event you would like to attend:</p>
+      <h2>Registration</h2>
 
-      <div class="registration-grid">
-        <!-- Arholma Microgrid Visit -->
-        <div class="reg-card">
-          <h3>Visit Arholma Microgrid</h3>
-          <p>Day 0 · Oct 8, 2025 · Hosted by Vattenfall</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3tcDO17nENmAnYdNADqgSMDekdTqbt04VMePgPS05DuQ2gQ/viewform?usp=dialog" class="btn kth" target="_blank" rel="noopener">
-            Register
-          </a>
-        </div>
+      <p>
+        <span class="reg-icon">👉</span>
+        Register for the <strong>Workshop (Oct 9–10, 2025)</strong>:
+        <a href="https://events.vtools.ieee.org/event/register/497418" target="_blank" rel="noopener" class="reg-link">📝 Register here</a>
+      </p>
 
-        <!-- Workshop -->
-        <div class="reg-card">
-          <h3>Workshop · MEC 2025</h3>
-          <p>Day 1–2 · Oct 9–10, 2025 · KTH Main Campus, Stockholm</p>
-          <a href="https://events.vtools.ieee.org/m/497418" class="btn kth" target="_blank" rel="noopener">
-            Register
-          </a>
-        </div>
+      <p>
+        <span class="reg-icon">👉</span>
+        Register for the <strong>Microgrid Tour (Oct 8, 2025)</strong>:
+        <span class="reg-link" style="opacity:.6;">📝 Link coming soon</span>
+      </p>
+
+      <!-- Important Information -->
+      <div class="important-box">
+        <h3>Important Information</h3>
+        <ul>
+          <li><strong>Registration deadline:</strong> September 25, 2025</li>
+          <li><strong>Capacity:</strong> Workshop limited to 100 participants | Tour limited to 30 participants</li>
+          <li><strong>Fee:</strong> Registration is free of charge</li>
+          <li><strong>No-show policy:</strong> A 1000 SEK no-show fee applies if a registrant does not attend</li>
+        </ul>
       </div>
     </section>
   </main>
-
 
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
         <strong>Contact us</strong><br>
-        Email: <a href="mailto:info@isg-mec.org">xuanj@kth.se</a><br>
+        Email: <a href="mailto:xuanj@kth.se">xuanj@kth.se</a><br>
         Address: KTH Royal Institute of Technology, Brinellvägen 8, 11428, Stockholm, Sweden
       </div>
       <div style="text-align:right;">
