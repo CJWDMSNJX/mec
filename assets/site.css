@@ -267,7 +267,7 @@ footer{padding:38px 0; border-top:1px solid var(--border); color:var(--muted)}
 .speaker.card {
   display: flex;
   flex-direction: column;
-  height: 600px; /* 根据需要调整 */
+  height: 800px; /* 根据需要调整 */
   overflow: visible;
 }
 .speaker .content {
