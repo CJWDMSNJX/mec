@@ -268,7 +268,7 @@ footer{padding:38px 0; border-top:1px solid var(--border); color:var(--muted)}
   display: flex;
   flex-direction: column;
   height: 650px; /* 根据需要调整 */
-  overflow: visible;
+  overflow: hidden;
 }
 .speaker .content {
   display: flex;
@@ -278,7 +278,7 @@ footer{padding:38px 0; border-top:1px solid var(--border); color:var(--muted)}
 .speaker .bio-scroll {
   margin-top: auto; /* 保证标题部分固定在上方，bio 在下方滚动 */
   overflow-y: auto;
-  max-height: 200px; /* 控制 bio 区域高度 */
+  max-height: 180px; /* 控制 bio 区域高度 */
   padding-right: 6px; /* 留出滚动条空间 */
 }
 .speaker .bio-scroll::-webkit-scrollbar {
